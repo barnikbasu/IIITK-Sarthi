@@ -1,9 +1,27 @@
-import { ShoppingBag, Search, Tag, Plus, User, ArrowRight } from "lucide-react";
-import { motion } from "motion/react";
+import { ShoppingBag, Search, Tag, Plus, User, ArrowRight, X, CheckCircle, Package } from "lucide-react";
+import { motion, AnimatePresence } from "motion/react";
 import { marketItems } from "../../data/mockData";
 import { cn } from "../../lib/utils";
+import { useState } from "react";
 
 export default function MarketView() {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isListing, setIsListing] = useState(false);
+  const [showListingSuccess, setShowListingSuccess] = useState(false);
+
+  const filtered = marketItems.filter(item => 
+    item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+    item.category.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleListAsset = () => {
+    setIsListing(true);
+    setTimeout(() => {
+      setIsListing(false);
+      setShowListingSuccess(true);
+      setTimeout(() => setShowListingSuccess(false), 3000);
+    }, 1500);
+  };
   return (
     <div className="space-y-8 pb-20">
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -11,11 +29,41 @@ export default function MarketView() {
           <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">Student Marketplace</h2>
           <p className="text-slate-500 dark:text-slate-400 font-medium tracking-tight">Buy, sell, or trade items with fellow students on campus.</p>
         </div>
-        <button className="flex items-center gap-2 px-6 py-4 bg-brand-primary dark:bg-brand-primary rounded-2xl text-[10px] font-black uppercase tracking-widest text-white shadow-xl shadow-brand-primary/20 hover:opacity-90 transition-all active:scale-95 group">
-            <Plus size={20} />
-            List Asset
-        </button>
+        <div className="flex items-center gap-3 w-full md:w-auto">
+            <div className="relative flex-1 md:w-64">
+                <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input 
+                    type="text" 
+                    placeholder="Search items..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="w-full pl-12 pr-4 py-4 bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 rounded-2xl focus:ring-2 focus:ring-brand-primary outline-none transition-all dark:text-white font-bold text-sm"
+                />
+            </div>
+            <button 
+                onClick={handleListAsset}
+                disabled={isListing}
+                className="flex items-center gap-2 px-6 py-4 bg-brand-primary text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-brand-primary/20 hover:opacity-90 transition-all active:scale-95 disabled:opacity-50"
+            >
+                {isListing ? <motion.div animate={{ rotate: 360 }} transition={{ repeat: Infinity, duration: 1 }}><Package size={18} /></motion.div> : <Plus size={20} />}
+                {isListing ? "Processing..." : "List Asset"}
+            </button>
+        </div>
       </div>
+
+      <AnimatePresence>
+        {showListingSuccess && (
+            <motion.div 
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                className="p-4 bg-status-success/10 border border-status-success/20 rounded-2xl flex items-center gap-3 text-status-success font-black text-xs uppercase tracking-widest justify-center"
+            >
+                <CheckCircle size={20} />
+                Asset listed successfully in campus inventory
+            </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Featured Banner */}
       <div className="relative overflow-hidden bg-brand-navy rounded-[2.5rem] p-10 text-white border border-white/5 shadow-2xl">
@@ -31,7 +79,7 @@ export default function MarketView() {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {marketItems.map((item) => (
+        {filtered.map((item) => (
           <motion.div
             key={item.id}
             whileHover={{ y: -6 }}
