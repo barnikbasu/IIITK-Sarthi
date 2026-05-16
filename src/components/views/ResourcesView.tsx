@@ -1,4 +1,4 @@
-import { FileText, Download, Filter, Search, BookOpen, Presentation, FileCode } from "lucide-react";
+import { FileText, Download, Filter, Search, BookOpen, Presentation, FileCode, CheckCircle, Loader2 } from "lucide-react";
 import { motion } from "motion/react";
 import { resources } from "../../data/mockData";
 import { cn } from "../../lib/utils";
@@ -6,8 +6,20 @@ import { useState } from "react";
 
 export default function ResourcesView() {
   const [filter, setFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isDownloading, setIsDownloading] = useState<string | null>(null);
 
-  const filtered = filter === "All" ? resources : resources.filter(r => r.type === filter);
+  const filtered = resources.filter(r => {
+    const matchesFilter = filter === "All" || r.type === filter;
+    const matchesSearch = r.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                          r.subject.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
+
+  const handleDownload = (id: string) => {
+    setIsDownloading(id);
+    setTimeout(() => setIsDownloading(null), 2000);
+  };
 
   const typeIcons = {
     Notes: FileText,
@@ -30,6 +42,8 @@ export default function ResourcesView() {
             <input 
                 type="text" 
                 placeholder="Search subject or code..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-14 pr-6 py-5 bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 rounded-[1.5rem] focus:ring-2 focus:ring-brand-primary outline-none transition-all font-black text-xs uppercase tracking-widest text-slate-700 dark:text-slate-100"
             />
         </div>
@@ -76,9 +90,27 @@ export default function ResourcesView() {
                         <p className="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-6">{item.subject}</p>
                     </div>
                     
-                    <button className="w-full flex items-center justify-center gap-3 py-4 bg-slate-50 dark:bg-slate-800/50 hover:bg-brand-primary dark:hover:bg-brand-primary text-brand-primary dark:text-brand-teal hover:text-white rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all group/btn shadow-inner">
-                        <Download size={18} className="group-hover/btn:-translate-y-0.5 group-hover/btn:translate-y-0 transition-transform" />
-                        Download
+                    <button 
+                        onClick={() => handleDownload(item.id)}
+                        disabled={isDownloading === item.id}
+                        className={cn(
+                            "w-full flex items-center justify-center gap-3 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest transition-all group/btn shadow-inner",
+                            isDownloading === item.id 
+                                ? "bg-status-success text-white" 
+                                : "bg-slate-50 dark:bg-slate-800/50 hover:bg-brand-primary dark:hover:bg-brand-primary text-brand-primary dark:text-brand-teal hover:text-white"
+                        )}
+                    >
+                        {isDownloading === item.id ? (
+                            <>
+                                <CheckCircle size={18} className="animate-in zoom-in" />
+                                Ready
+                            </>
+                        ) : (
+                            <>
+                                <Download size={18} className="group-hover/btn:-translate-y-0.5 group-hover/btn:translate-y-0 transition-transform" />
+                                Download
+                            </>
+                        )}
                     </button>
                 </motion.div>
             );
