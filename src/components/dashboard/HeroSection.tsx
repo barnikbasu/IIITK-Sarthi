@@ -14,7 +14,7 @@ import { motion } from "motion/react";
 import { dashboardMetrics, currentUser } from "../../data/mockData";
 import { cn } from "../../lib/utils";
 
-export default function HeroSection() {
+export default function HeroSection({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   const { attendance, nextClass, messMenu } = dashboardMetrics;
 
   const attendanceColors = {
@@ -144,7 +144,10 @@ export default function HeroSection() {
                 </div>
              </div>
              <div className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800">
-                <button className="w-full py-4 bg-slate-50 dark:bg-slate-900 hover:bg-brand-primary/5 dark:hover:bg-brand-primary/10 text-slate-900 dark:text-slate-200 hover:text-brand-primary rounded-2xl text-xs font-black uppercase tracking-widest transition-all border border-transparent hover:border-brand-primary/20">
+                <button 
+                    onClick={() => setActiveTab("schedule")}
+                    className="w-full py-4 bg-slate-50 dark:bg-slate-900 hover:bg-brand-primary/5 dark:hover:bg-brand-primary/10 text-slate-900 dark:text-slate-200 hover:text-brand-primary rounded-2xl text-xs font-black uppercase tracking-widest transition-all border border-transparent hover:border-brand-primary/20"
+                >
                    View Full Schedule
                 </button>
              </div>
