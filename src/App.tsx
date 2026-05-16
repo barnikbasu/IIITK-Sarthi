@@ -20,7 +20,7 @@ export default function App() {
   return (
     <MainLayout activeTab={activeTab} setActiveTab={setActiveTab}>
       <div className="space-y-4">
-        {activeTab === "dashboard" && <DashboardView />}
+        {activeTab === "dashboard" && <DashboardView setActiveTab={setActiveTab} />}
         {activeTab === "tasks" && <TasksView />}
         {activeTab === "opportunities" && <OpportunitiesView />}
         {activeTab === "resources" && <ResourcesView />}
@@ -39,11 +39,11 @@ export default function App() {
   );
 }
 
-function DashboardView() {
+function DashboardView({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   return (
     <div className="animate-in fade-in slide-in-from-bottom-4 duration-700">
-      <HeroSection />
-      <FeatureGrid />
+      <HeroSection setActiveTab={setActiveTab} />
+      <FeatureGrid setActiveTab={setActiveTab} />
     </div>
   );
 }
