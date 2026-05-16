@@ -19,7 +19,7 @@ const iconMap: Record<string, any> = {
   Briefcase,
 };
 
-export default function FeatureGrid() {
+export default function FeatureGrid({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
   return (
     <div className="grid grid-cols-1 xl:grid-cols-3 gap-8 mt-12 pb-20">
       
@@ -30,7 +30,10 @@ export default function FeatureGrid() {
             <Bell size={20} className="text-brand-primary dark:text-brand-teal" />
             Recent Notices
           </h3>
-          <button className="text-sm font-bold text-brand-primary dark:text-brand-teal hover:opacity-80 flex items-center gap-1 transition-all">
+          <button 
+            onClick={() => setActiveTab("analytics")}
+            className="text-sm font-bold text-brand-primary dark:text-brand-teal hover:opacity-80 flex items-center gap-1 transition-all"
+          >
             View All <ChevronRight size={16} />
           </button>
         </div>
