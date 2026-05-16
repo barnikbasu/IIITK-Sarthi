@@ -234,30 +234,56 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
             )}
         </AnimatePresence>
 
-        {/* Mobile Nav Overlay Items for navigation logic */}
-        <nav className="xl:hidden fixed bottom-0 left-0 right-0 h-20 bg-white/70 dark:bg-brand-navy/70 backdrop-blur-2xl border-t border-slate-200 dark:border-slate-800 flex items-center justify-around px-2 z-30 pb-safe">
-          {navItems.slice(0, 5).map((item) => (
-            <button
-              key={item.id}
-              onClick={() => setActiveTab(item.id)}
-              className={cn(
-                "flex flex-col items-center gap-1 transition-all relative px-3 py-1",
-                activeTab === item.id ? "text-brand-primary dark:text-brand-teal" : "text-slate-400 dark:text-slate-500"
-              )}
-            >
-              <item.icon size={22} strokeWidth={activeTab === item.id ? 3 : 2} />
-              <span className="text-[10px] font-black uppercase tracking-tighter">{item.label}</span>
-              {activeTab === item.id && (
-                <motion.div 
-                  layoutId="activeTabIndicator"
-                  className="absolute -top-[1.5px] w-12 h-[3px] bg-brand-primary dark:bg-brand-teal rounded-full shadow-[0_-2px_10px_rgba(26,79,216,0.5)]" 
-                />
-              )}
-            </button>
-          ))}
-          <button className="flex flex-col items-center gap-1 text-slate-400 px-3 py-1" onClick={() => setIsSidebarOpen(true)}>
-             <MoreVertical size={22} />
-             <span className="text-[10px] font-black uppercase tracking-tighter">More</span>
+        {/* Mobile Navigation Bar */}
+        <nav className="xl:hidden fixed bottom-6 left-6 right-6 h-20 bg-white/80 dark:bg-brand-navy/90 backdrop-blur-2xl border border-slate-200/50 dark:border-white/10 flex items-center justify-between px-4 z-30 rounded-[2rem] shadow-2xl shadow-brand-navy/20">
+          {[
+            { label: "Home", icon: LayoutDashboard, id: "dashboard" },
+            { label: "Schedule", icon: Calendar, id: "schedule" },
+            { label: "Tasks", icon: CheckSquare, id: "tasks" },
+            { label: "Map", icon: MapPin, id: "map" },
+          ].map((item) => {
+            const isActive = activeTab === item.id;
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveTab(item.id)}
+                className={cn(
+                  "relative flex flex-col items-center justify-center w-14 h-14 transition-all duration-300",
+                  isActive ? "text-brand-primary dark:text-brand-teal" : "text-slate-400 dark:text-slate-500"
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="mobileActiveTab"
+                    className="absolute inset-0 bg-brand-primary/10 dark:bg-brand-primary/20 rounded-2xl"
+                    initial={false}
+                    transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                  />
+                )}
+                <motion.div
+                  animate={{ 
+                    scale: isActive ? 1.1 : 1,
+                    y: isActive ? -2 : 0
+                  }}
+                  className="relative z-10"
+                >
+                  <item.icon size={24} strokeWidth={isActive ? 2.5 : 2} />
+                </motion.div>
+                <span className={cn(
+                  "text-[8px] font-black uppercase tracking-widest mt-1 relative z-10 transition-opacity duration-300",
+                  isActive ? "opacity-100" : "opacity-0 h-0"
+                )}>
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+          
+          <button 
+            className="flex flex-col items-center justify-center w-14 h-14 text-slate-400 dark:text-slate-500 active:scale-95 transition-all" 
+            onClick={() => setIsSidebarOpen(true)}
+          >
+             <MoreVertical size={24} />
           </button>
         </nav>
       </main>
