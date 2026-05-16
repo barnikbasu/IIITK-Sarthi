@@ -1,0 +1,12 @@
+{
+  "name": "IIITK Sarthi",
+  "description": "An intelligent daily-use campus operating system for students, faculty, and staff of IIIT Kalyani.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

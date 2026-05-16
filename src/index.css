@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  
+  /* Brand Palette */
+  --color-brand-primary: #1A4FD8;
+  --color-brand-navy: #0F172A;
+  --color-brand-teal: #14B8A6;
+  --color-brand-gold: #EAB308;
+  
+  /* Backgrounds */
+  --color-bg-light: #F8FAFC;
+  --color-bg-dark: #0B1120;
+  
+  /* Status */
+  --color-status-success: #10B981;
+  --color-status-warning: #F59E0B;
+  --color-status-danger: #EF4444;
+
+  /* Overrides for native tailwind colors if needed, but we'll stick to semantic ones */
+}
+
+@layer base {
+  body {
+    @apply bg-bg-light text-slate-900 border-slate-200 dark:bg-bg-dark dark:text-slate-100 dark:border-slate-800 transition-colors duration-300;
+  }
+}
+
+/* Custom Utilities */
+@layer utilities {
+  .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-xl dark:bg-slate-900/70 dark:border-slate-700/40;
+  }
+  
+  .card-hover {
+    @apply hover:shadow-lg hover:-translate-y-1 transition-all duration-300;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
