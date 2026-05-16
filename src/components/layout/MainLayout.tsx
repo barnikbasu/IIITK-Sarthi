@@ -55,14 +55,19 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
   const [isAIChatOpen, setIsAIChatOpen] = useState(false);
 
   useEffect(() => {
+    const root = window.document.documentElement;
     if (isDarkMode) {
-      document.documentElement.classList.add("dark");
+      root.classList.add("dark");
+      root.style.colorScheme = "dark";
       localStorage.setItem("theme", "dark");
     } else {
-      document.documentElement.classList.remove("dark");
+      root.classList.remove("dark");
+      root.style.colorScheme = "light";
       localStorage.setItem("theme", "light");
     }
   }, [isDarkMode]);
+
+  const toggleDarkMode = () => setIsDarkMode(prev => !prev);
 
   return (
     <div className="flex h-screen bg-bg-light dark:bg-bg-dark overflow-hidden font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300">
@@ -143,12 +148,13 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
 
           <div className="flex items-center gap-2 md:gap-4 text-slate-600 dark:text-slate-400">
             <button 
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              className="p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all active:scale-90"
+              onClick={toggleDarkMode}
+              className="p-3 hover:bg-white dark:hover:bg-slate-800 rounded-full transition-all active:scale-90 shadow-sm border border-slate-200 dark:border-slate-800"
+              aria-label="Toggle Dark Mode"
             >
-               {isDarkMode ? <Sun size={20} className="text-brand-gold" /> : <Moon size={20} className="text-brand-primary" />}
+               {isDarkMode ? <Sun size={20} className="text-brand-gold animate-in spin-in-90 duration-500" /> : <Moon size={20} className="text-brand-primary animate-in spin-in-[-90] duration-500" />}
             </button>
-            <button className="p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all relative group">
+            <button className="p-3 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-all relative group shadow-sm border border-slate-200 dark:border-slate-800">
                <Bell size={20} className="group-hover:rotate-12 transition-transform" />
                <span className="absolute top-3 right-3 w-2.5 h-2.5 bg-status-danger rounded-full border-2 border-white dark:border-slate-900"></span>
             </button>
@@ -345,7 +351,28 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
                 ))}
               </div>
 
-              <div className="mt-8 pt-8 border-t border-slate-100 dark:border-slate-800 flex items-center gap-4">
+              <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-3xl flex items-center justify-between border border-slate-100 dark:border-slate-700/50">
+                 <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-xl bg-white dark:bg-brand-navy flex items-center justify-center shadow-sm">
+                       {isDarkMode ? <Moon size={20} className="text-brand-primary" /> : <Sun size={20} className="text-brand-gold" />}
+                    </div>
+                    <span className="font-bold text-sm text-slate-700 dark:text-slate-300">Dark Appearance</span>
+                 </div>
+                 <button 
+                    onClick={toggleDarkMode}
+                    className={cn(
+                        "w-12 h-6 rounded-full transition-all relative p-1",
+                        isDarkMode ? "bg-brand-primary" : "bg-slate-300"
+                    )}
+                 >
+                    <motion.div 
+                        animate={{ x: isDarkMode ? 24 : 0 }}
+                        className="w-4 h-4 bg-white rounded-full shadow-md"
+                    />
+                 </button>
+              </div>
+
+              <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center gap-4">
                  <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-primary to-indigo-800 flex items-center justify-center text-white font-black text-lg">
                     BB
                  </div>
