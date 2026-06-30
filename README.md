@@ -1,7 +1,7 @@
 # 🚀 IIITK Sarthi
+  
 ### *The Smart Campus Operating System for IIIT Kalyani*
 
-<p align="center">
   <b>Everything Campus. One Place.</b><br>
   An AI-powered digital ecosystem built to transform campus life for students, faculty, staff, and administration.
 </p>
