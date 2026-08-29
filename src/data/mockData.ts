@@ -1,4 +1,4 @@
-import { Notice, Contact, QuickLink, DashboardMetrics, UserProfile, Resource, MarketItem, ScheduleItem, Opportunity, Task, EmergencyContact } from "../types";
+import { Notice, Contact, QuickLink, DashboardMetrics, UserProfile, Resource, MarketItem, ScheduleItem, Opportunity, Task, EmergencyContact, AdminBroadcastNotice, PeerStudyGroup, SubjectAttendance } from "../types";
 
 export const currentUser: UserProfile = {
   name: "Barnik Basu",
@@ -123,9 +123,135 @@ export const tasks: Task[] = [
 ];
 
 export const emergencyContacts: EmergencyContact[] = [
-  { id: "e1", title: "Campus Ambulance", number: "+91 98765 43210", category: "Medical" },
-  { id: "e2", title: "Main Security Gate", number: "+91 98765 00001", category: "Security" },
-  { id: "e3", title: "Anti-Ragging Helpline", number: "1800-XXX-XXXX", category: "Admin" },
+  { id: "e1", title: "Campus Ambulance & Trauma", number: "+91 98765 43210", category: "Medical" },
+  { id: "e2", title: "Main Security Gate & Control Room", number: "+91 98765 00001", category: "Security" },
+  { id: "e3", title: "Anti-Ragging & Proctorial Cell", number: "1800-180-5522", category: "Admin" },
+];
+
+export const adminBroadcasts: AdminBroadcastNotice[] = [
+  {
+    id: "b1",
+    title: "🚨 Emergency Weather Alert: Torrential Rain & Transit Advisory",
+    summary: "Due to heavy thunderstorms in Kalyani and Nadia district, all LHC evening laboratory sessions after 4:00 PM are shifted online. Campus emergency shuttle frequency doubled.",
+    department: "Office of the Dean (Student Affairs)",
+    timestamp: "10 mins ago",
+    urgency: "Critical",
+    category: "Security",
+    actionLabel: "View Emergency Transit",
+    actionTab: "emergency",
+    read: false
+  },
+  {
+    id: "b2",
+    title: "Revised Mid-Semester Examination Schedule & Seating Plan Released",
+    summary: "The revised Spring 2026 Mid-Semester examinations schedule (Sem 4 & 6) has been updated. Verify your assigned room number and digital barcode on your student pass.",
+    department: "Office of the Controller of Examinations",
+    timestamp: "45 mins ago",
+    urgency: "Urgent",
+    category: "Academic",
+    actionLabel: "Download Timetable",
+    actionTab: "schedule",
+    read: false
+  },
+  {
+    id: "b3",
+    title: "Mandatory Elective Course Allocation for Semester 5",
+    summary: "Students entering 3rd year must submit their top 3 departmental elective preferences on the ERP portal before Friday 5:00 PM.",
+    department: "Academic Section & Registrar",
+    timestamp: "2 hours ago",
+    urgency: "Urgent",
+    category: "Academic",
+    actionLabel: "Open Electives",
+    actionTab: "resources",
+    read: false
+  },
+  {
+    id: "b4",
+    title: "Hostel Water Filter & Fiber Maintenance Window",
+    summary: "Hostel Blocks A & B will undergo scheduled RO filtration maintenance and optical fiber switch upgrade between 2:00 AM and 4:00 AM on Saturday.",
+    department: "Estate & Residential Life",
+    timestamp: "5 hours ago",
+    urgency: "Standard",
+    category: "Hostel",
+    actionLabel: "Hostel Helpdesk",
+    actionTab: "directory",
+    read: true
+  },
+  {
+    id: "b5",
+    title: "Placement Cell: Google Summer of Code (GSoC) & SIH Info Session",
+    summary: "Join the open mentorship session with previous GSoC scholars and Smart India Hackathon finalists this Thursday at 6:00 PM in LT-1.",
+    department: "Training & Placement Cell",
+    timestamp: "Yesterday",
+    urgency: "Standard",
+    category: "Placement",
+    actionLabel: "Explore Opportunities",
+    actionTab: "opportunities",
+    read: true
+  }
+];
+
+export const subjectAttendanceData: SubjectAttendance[] = [
+  { id: "sa1", code: "CS201", name: "Operating Systems Core", subject: "Operating Systems Core", attended: 28, total: 32, faculty: "Dr. S. K. Mandal", status: "Safe" },
+  { id: "sa2", code: "CS202", name: "Database Management Systems", subject: "Database Management Systems", attended: 24, total: 30, faculty: "Dr. S. Kumar", status: "Safe" },
+  { id: "sa3", code: "CS203", name: "Data Structures & Algorithms", subject: "Data Structures & Algorithms", attended: 22, total: 25, faculty: "Prof. S. Sen", status: "Safe" },
+  { id: "sa4", code: "EC204", name: "Computer Organization & Architecture", subject: "Computer Organization & Architecture", attended: 18, total: 25, faculty: "Dr. A. Gupta", status: "Warning" },
+  { id: "sa5", code: "MA205", name: "Discrete & Advanced Mathematics", subject: "Discrete & Advanced Mathematics", attended: 21, total: 26, faculty: "Dr. P. Bagchi", status: "Safe" }
+];
+
+export const peerStudyGroupsMock: PeerStudyGroup[] = [
+  {
+    id: "sg1",
+    name: "OS Virtual Memory & Deadlocks Sprint",
+    subject: "Operating Systems",
+    topic: "Page Replacement Algorithms & Semaphore Race Conditions",
+    members: ["Barnik Basu", "Rahul Sharma", "Sneha Roy"],
+    maxMembers: 5,
+    location: "Library 2nd Floor (Quiet Zone)",
+    meetingTime: "Tonight • 7:30 PM",
+    difficulty: "Exam Sprint",
+    creator: "Rahul Sharma",
+    joined: false
+  },
+  {
+    id: "sg2",
+    name: "DSA LeetCode Hard & DP Masters",
+    subject: "Data Structures & Algorithms",
+    topic: "Dynamic Programming on Trees & Graph Dijkstra/Floyd",
+    members: ["Aniket Sen", "Debanjan Paul", "Barnik Basu", "Priya Ghosh"],
+    maxMembers: 6,
+    location: "CS Lab 102 & Google Meet",
+    meetingTime: "Daily • 9:00 PM",
+    difficulty: "Intermediate",
+    creator: "Aniket Sen",
+    joined: true
+  },
+  {
+    id: "sg3",
+    name: "DBMS B+ Trees & Normalization Lab",
+    subject: "Database Management Systems",
+    topic: "3NF vs BCNF Decomposition & Query Execution Plans",
+    members: ["Sneha Roy", "Vikram Jha"],
+    maxMembers: 4,
+    location: "Hostel BH-1 Common Study Room",
+    meetingTime: "Tomorrow • 4:00 PM",
+    difficulty: "Exam Sprint",
+    creator: "Sneha Roy",
+    joined: false
+  },
+  {
+    id: "sg4",
+    name: "Computer Organization Pipeline & Cache",
+    subject: "Computer Organization",
+    topic: "MIPS 5-Stage Pipeline Hazards & Direct-Mapped Cache",
+    members: ["Rohan Dey", "Kiran Verma", "Subhashis M"],
+    maxMembers: 4,
+    location: "LHC Room 204",
+    meetingTime: "Friday • 5:00 PM",
+    difficulty: "Beginner",
+    creator: "Rohan Dey",
+    joined: false
+  }
 ];
 
 export const resources: Resource[] = [

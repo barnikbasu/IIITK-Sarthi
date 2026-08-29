@@ -2,7 +2,7 @@ import { CheckCircle2, Circle, Clock, AlertTriangle, Plus, Calendar, X, Check, S
 import { motion, AnimatePresence } from "motion/react";
 import { tasks as initialTasks } from "../../data/mockData";
 import { cn } from "../../lib/utils";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Task } from "../../types";
 
 export default function TasksView() {
@@ -14,7 +14,7 @@ export default function TasksView() {
 
   // Form states for new task
   const [newTitle, setNewTitle] = useState("");
-  const [newType, setNewType] = useState<"Assignment" | "Exam" | "Project">("Assignment");
+  const [newType, setNewType] = useState<"Assignment" | "Exam" | "Quiz">("Assignment");
   const [newPriority, setNewPriority] = useState<"High" | "Moderate" | "Low">("Moderate");
   const [newDueDate, setNewDueDate] = useState("May 20, 2026");
 
@@ -36,6 +36,7 @@ export default function TasksView() {
       type: newType,
       priority: newPriority,
       dueDate: newDueDate,
+      status: "Pending",
     };
 
     setTaskList(prev => [newTask, ...prev]);
@@ -238,7 +239,7 @@ export default function TasksView() {
                     >
                       <option value="Assignment">Assignment</option>
                       <option value="Exam">Exam</option>
-                      <option value="Project">Project</option>
+                      <option value="Quiz">Quiz</option>
                     </select>
                   </div>
 
@@ -296,6 +297,7 @@ interface TaskCardProps {
   task: Task;
   isCompleted: boolean;
   onToggle: () => void;
+  key?: React.Key;
 }
 
 function TaskCard({ task, isCompleted, onToggle }: TaskCardProps) {

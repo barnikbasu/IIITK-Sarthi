@@ -2,7 +2,7 @@ import { ShoppingBag, Search, Tag, Plus, User, ArrowRight, X, CheckCircle, Packa
 import { motion, AnimatePresence } from "motion/react";
 import { marketItems as initialItems } from "../../data/mockData";
 import { cn } from "../../lib/utils";
-import { useState } from "react";
+import React, { useState } from "react";
 import { MarketItem } from "../../types";
 
 export default function MarketView() {

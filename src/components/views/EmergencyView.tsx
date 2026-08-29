@@ -1,10 +1,14 @@
-import { Phone, ShieldAlert, Heart, Siren, MapPin, Share2, X, AlertTriangle, Send, CheckCircle2 } from "lucide-react";
+import { Phone, ShieldAlert, Heart, Siren, MapPin, Share2, X, AlertTriangle, Send, CheckCircle2, Radio, Power } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { emergencyContacts } from "../../data/mockData";
 import { cn } from "../../lib/utils";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import SOSOverlay from "../emergency/SOSOverlay";
 
 export default function EmergencyView() {
+  // SOS Fullscreen Mode state
+  const [isSosModeActive, setIsSosModeActive] = useState(false);
+
   // Modal states
   const [isSosOpen, setIsSosOpen] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -92,32 +96,74 @@ export default function EmergencyView() {
 
   return (
     <div className="space-y-8 pb-20 relative">
+      {/* 🚨 Fullscreen SOS Emergency Overlay */}
+      <SOSOverlay 
+        isOpen={isSosModeActive} 
+        onClose={() => {
+          setIsSosModeActive(false);
+          triggerToast("SOS Mode deactivated. Standing by.");
+        }} 
+      />
+
       <div className="bg-rose-600 rounded-[2.5rem] p-8 text-white shadow-2xl shadow-rose-200 dark:shadow-none overflow-hidden relative border border-rose-500">
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full translate-x-32 -translate-y-32 blur-3xl pointer-events-none"></div>
           
-          <div className="relative z-10">
-              <h2 className="text-4xl font-black text-white/95 tracking-tighter mb-4 uppercase">Emergency Response Center</h2>
-              <p className="text-rose-100 max-w-xl font-semibold mb-8 text-sm">One-tap actions for critical assistance. Available 24/7 for IIIT Kalyani campus residents and staff.</p>
-              
-              <div className="flex flex-wrap gap-4">
-                  <motion.button 
-                    onClick={handleOpenSos}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-3 px-8 py-4 bg-white text-rose-600 rounded-2xl font-black shadow-xl"
-                  >
-                      <Siren size={24} className="animate-pulse" /> ACTIVATE SOS
-                  </motion.button>
-                  
-                  <motion.button 
-                    onClick={handleShareLocation}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="flex items-center gap-3 px-8 py-4 bg-rose-500 text-white border-2 border-rose-400 rounded-2xl font-bold shadow-xl"
-                  >
-                      <Share2 size={24} /> SHARE LOCATION
-                  </motion.button>
+          <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+              <div className="max-w-xl">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-3 py-1 bg-white/20 rounded-lg text-[10px] font-black uppercase tracking-widest text-white border border-white/20 flex items-center gap-1.5">
+                      <Radio size={12} className="animate-pulse text-amber-300" />
+                      <span>24/7 Rapid Action Network</span>
+                    </span>
+                  </div>
+                  <h2 className="text-4xl font-black text-white/95 tracking-tighter mb-2 uppercase font-heading">Emergency Response Center</h2>
+                  <p className="text-rose-100 font-medium text-sm">One-tap actions for critical assistance, security dispatch, ambulance triage, and anti-ragging helpline.</p>
               </div>
+
+              {/* SOS Mode Toggle Switch Banner */}
+              <div className="p-5 rounded-3xl bg-black/25 backdrop-blur-xl border border-white/20 flex flex-col sm:flex-row items-center gap-4 shrink-0 shadow-2xl">
+                <div className="text-left">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-rose-200 block">
+                    Instant Threat Response
+                  </span>
+                  <p className="text-sm font-black text-white">
+                    {isSosModeActive ? "🚨 SOS MODE ACTIVE" : "SOS Mode Switch"}
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => setIsSosModeActive(!isSosModeActive)}
+                  className={cn(
+                    "px-6 py-3.5 rounded-2xl font-black text-xs uppercase tracking-wider transition-all flex items-center gap-2.5 shadow-xl active:scale-95",
+                    isSosModeActive
+                      ? "bg-amber-400 text-slate-950 animate-pulse font-black"
+                      : "bg-white text-rose-700 hover:bg-rose-50"
+                  )}
+                >
+                  <Power size={18} className={isSosModeActive ? "animate-spin" : ""} />
+                  <span>{isSosModeActive ? "Turn Off SOS" : "Enable SOS Mode"}</span>
+                </button>
+              </div>
+          </div>
+
+          <div className="relative z-10 mt-8 pt-6 border-t border-white/15 flex flex-wrap gap-4">
+              <motion.button 
+                onClick={() => setIsSosModeActive(true)}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-3 px-8 py-4 bg-white text-rose-600 rounded-2xl font-black shadow-xl text-xs uppercase tracking-wider"
+              >
+                  <Siren size={20} className="animate-pulse" /> Launch Fullscreen SOS Overlay
+              </motion.button>
+              
+              <motion.button 
+                onClick={handleShareLocation}
+                whileHover={{ scale: 1.03 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex items-center gap-3 px-8 py-4 bg-rose-500/80 hover:bg-rose-500 text-white border-2 border-rose-400/80 rounded-2xl font-bold shadow-xl text-xs uppercase tracking-wider"
+              >
+                  <Share2 size={20} /> Broadcast Live GPS
+              </motion.button>
           </div>
       </div>
 

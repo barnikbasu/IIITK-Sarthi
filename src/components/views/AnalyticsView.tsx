@@ -2,7 +2,8 @@ import { TrendingUp, Target, BarChart3, PieChart, Info, RefreshCw, X, Check, Cal
 import { motion, AnimatePresence } from "motion/react";
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts";
 import { cn } from "../../lib/utils";
-import { useState } from "react";
+import React, { useState } from "react";
+import AcademicHeatmap from "../analytics/AcademicHeatmap";
 
 const performanceData = [
   { sem: "Sem 1", gpa: 8.2 },
@@ -181,6 +182,9 @@ export default function AnalyticsView() {
                </div>
           </div>
       </div>
+
+      {/* 📊 Academic Performance Heatmap & Recharts Velocity Trends */}
+      <AcademicHeatmap />
 
       {/* TARGET RECALCULATE MODAL */}
       <AnimatePresence>

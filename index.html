@@ -3,10 +3,69 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="An intelligent daily-use campus operating system for students, faculty, and staff of IIIT Kalyani." />
+    <meta property="og:title" content="IIITK Sarthi | Campus OS" />
+    <meta property="og:description" content="An intelligent daily-use campus operating system for students, faculty, and staff of IIIT Kalyani." />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <title>IIITK Sarthi | Campus OS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&family=Noto+Sans:ital,wght@0,300..900;1,300..900&family=Rozha+One&display=swap" rel="stylesheet">
+    <title>IIITK Sarthi | Indian Institute of Information Technology, Kalyani</title>
+    <script>
+      function getStoredTheme() {
+        const darkmode = localStorage.getItem('darkmode');
+        if (darkmode === 'true') return true;
+        if (darkmode === 'false') return false;
+
+        const themePref = localStorage.getItem('themePreference');
+        if (themePref === 'dark') return true;
+        if (themePref === 'light') return false;
+
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark') return true;
+        if (theme === 'light') return false;
+
+        return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+
+      function applyTheme(isDark) {
+        if (isDark) {
+          document.documentElement.classList.add('dark', 'dark-mode');
+          if (document.body) {
+            document.body.classList.add('dark', 'dark-mode');
+          }
+        } else {
+          document.documentElement.classList.remove('dark', 'dark-mode');
+          if (document.body) {
+            document.body.classList.remove('dark', 'dark-mode');
+          }
+        }
+      }
+
+      function toggleDarkMode() {
+        const body = document.body || document.documentElement;
+        const isCurrentlyDark = document.documentElement.classList.contains('dark') || (document.body && document.body.classList.contains('dark-mode'));
+        const nextState = !isCurrentlyDark;
+
+        applyTheme(nextState);
+
+        localStorage.setItem('darkmode', nextState ? 'true' : 'false');
+        localStorage.setItem('themePreference', nextState ? 'dark' : 'light');
+        localStorage.setItem('theme', nextState ? 'dark' : 'light');
+
+        // Dispatch a custom event for React components to sync if needed
+        window.dispatchEvent(new CustomEvent('themechange', { detail: { isDark: nextState } }));
+      }
+
+      // Expose globally
+      window.toggleDarkMode = toggleDarkMode;
+
+      // Apply immediately
+      applyTheme(getStoredTheme());
+
+      window.addEventListener('DOMContentLoaded', () => {
+        applyTheme(getStoredTheme());
+      });
+    </script>
   </head>
   <body>
     <div id="root"></div>

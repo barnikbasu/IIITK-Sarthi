@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   User, 
   Sparkles, 
@@ -9,7 +9,9 @@ import {
   CheckCircle,
   HelpCircle,
   Smartphone,
-  Check
+  Check,
+  Moon,
+  Sun
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../../lib/utils";
@@ -24,6 +26,26 @@ export default function SettingsView() {
   const [emailNotifications, setEmailNotifications] = useState(true);
   const [pushNotifications, setPushNotifications] = useState(true);
   const [bluetoothCheckin, setBluetoothCheckin] = useState(true);
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains("dark"));
+
+  const toggleTheme = () => {
+    if (typeof (window as any).toggleDarkMode === "function") {
+      (window as any).toggleDarkMode();
+      setIsDark(prev => !prev);
+    } else {
+      const next = !isDark;
+      setIsDark(next);
+      if (next) {
+        document.documentElement.classList.add("dark", "dark-mode");
+        document.body && document.body.classList.add("dark", "dark-mode");
+        localStorage.setItem("theme", "dark");
+      } else {
+        document.documentElement.classList.remove("dark", "dark-mode");
+        document.body && document.body.classList.remove("dark", "dark-mode");
+        localStorage.setItem("theme", "light");
+      }
+    }
+  };
 
   const handleSave = (e: React.FormEvent) => {
     e.preventDefault();
@@ -143,8 +165,36 @@ export default function SettingsView() {
           </div>
         </div>
 
-        {/* Right column: Notification settings */}
+        {/* Right column: Appearance & Notification settings */}
         <div className="lg:col-span-4 space-y-8">
+          {/* Appearance Card */}
+          <div className="bg-white dark:bg-brand-navy border border-slate-200/80 dark:border-slate-800 rounded-[2.5rem] p-8 space-y-6 shadow-sm">
+            <h3 className="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
+              <Moon size={18} className="text-brand-primary dark:text-brand-teal" />
+              Theme & Appearance
+            </h3>
+
+            <div className="space-y-4">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h4 className="font-bold text-xs text-slate-700 dark:text-slate-300">Dark Mode</h4>
+                  <p className="text-[10px] text-slate-400">Night-friendly UI contrast</p>
+                </div>
+                <button 
+                  type="button"
+                  onClick={toggleTheme}
+                  className={cn(
+                    "w-12 h-6 rounded-full transition-all relative p-1 flex items-center",
+                    isDark ? "bg-brand-primary justify-end" : "bg-slate-200 dark:bg-slate-800 justify-start"
+                  )}
+                  aria-label="Toggle dark mode theme"
+                >
+                  <motion.div layout className="w-4 h-4 bg-white rounded-full shadow-md" />
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div className="bg-white dark:bg-brand-navy border border-slate-200/80 dark:border-slate-800 rounded-[2.5rem] p-8 space-y-6 shadow-sm">
             <h3 className="font-bold text-lg text-slate-900 dark:text-white flex items-center gap-2">
               <Bell size={18} className="text-brand-primary dark:text-brand-teal" />

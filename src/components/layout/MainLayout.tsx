@@ -28,6 +28,9 @@ import {
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../../lib/utils";
 import SarthiAI from "../ai/SarthiAI";
+import ProfileDropdown from "./ProfileDropdown";
+import NotificationDropdown from "../notifications/NotificationDropdown";
+import { IIITKCrest, IIITKBanner } from "../common/IIITKLogo";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -52,42 +55,78 @@ const navItems = [
 export default function MainLayout({ children, activeTab, setActiveTab }: MainLayoutProps) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
+    const darkmode = localStorage.getItem("darkmode");
+    if (darkmode === "true") return true;
+    if (darkmode === "false") return false;
+    const themePref = localStorage.getItem("themePreference");
+    if (themePref === "dark") return true;
+    if (themePref === "light") return false;
     const saved = localStorage.getItem("theme");
-    return saved === "dark";
+    if (saved) return saved === "dark";
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   });
   const [isAIChatOpen, setIsAIChatOpen] = useState(false);
   const [showSessionMenu, setShowSessionMenu] = useState(false);
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(prev => !prev);
+  };
+
+  useEffect(() => {
+    const handleThemeChange = (e: any) => {
+      if (typeof e.detail?.isDark === "boolean") {
+        setIsDarkMode(e.detail.isDark);
+      }
+    };
+    window.addEventListener("themechange", handleThemeChange);
+    return () => window.removeEventListener("themechange", handleThemeChange);
+  }, []);
+
   useEffect(() => {
     const root = window.document.documentElement;
+    const body = window.document.body;
+
     if (isDarkMode) {
-      root.classList.add("dark");
+      root.classList.add("dark", "dark-mode");
+      if (body) body.classList.add("dark", "dark-mode");
       root.style.colorScheme = "dark";
       localStorage.setItem("theme", "dark");
+      localStorage.setItem("themePreference", "dark");
+      localStorage.setItem("darkmode", "true");
     } else {
-      root.classList.remove("dark");
+      root.classList.remove("dark", "dark-mode");
+      if (body) body.classList.remove("dark", "dark-mode");
       root.style.colorScheme = "light";
       localStorage.setItem("theme", "light");
+      localStorage.setItem("themePreference", "light");
+      localStorage.setItem("darkmode", "false");
     }
-  }, [isDarkMode]);
 
-  const toggleDarkMode = () => setIsDarkMode(prev => !prev);
+    // Expose toggle function globally for HTML inline handlers or external triggers
+    (window as any).toggleDarkMode = toggleDarkMode;
+  }, [isDarkMode]);
 
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-bg-dark overflow-hidden font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300">
-      {/* Desktop Sidebar */}
+      {/* Desktop Sidebar with Official Crest */}
       <aside className="hidden xl:flex flex-col w-72 bg-white dark:bg-brand-navy border-r border-slate-200 dark:border-slate-800/80">
-        <div className="p-8 flex items-center gap-3">
-          <div className="w-11 h-11 bg-brand-primary rounded-xl flex items-center justify-center text-white shadow-lg shadow-indigo-500/10 dark:shadow-none">
-            <Sparkles size={24} className="animate-pulse" />
+        <div className="p-6 pb-5 flex items-center gap-3.5 border-b border-slate-100 dark:border-slate-800/60">
+          <div className="relative group">
+            <IIITKCrest size={44} />
           </div>
           <div>
-            <span className="font-black text-xl tracking-tight text-slate-900 dark:text-white leading-tight block">IIITK Sarthi</span>
-            <span className="text-[10px] font-black text-slate-400 dark:text-slate-500 tracking-wider uppercase leading-none mt-1 block">Campus OS</span>
+            <div className="flex items-center gap-1.5">
+              <span className="font-heading text-xl font-bold tracking-tight text-slate-900 dark:text-white leading-tight">
+                IIITK Sarthi
+              </span>
+            </div>
+            <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 tracking-wider uppercase leading-none mt-0.5 block">
+              IIIT Kalyani Campus OS
+            </span>
           </div>
         </div>
 
-        <nav className="flex-1 px-4 py-2 space-y-1 overflow-y-auto scrollbar-hide">
+        <nav className="flex-1 px-4 py-3 space-y-1 overflow-y-auto scrollbar-hide">
           {navItems.map((item) => (
             <button
               key={item.id}
@@ -126,20 +165,20 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
             <span>Settings</span>
           </button>
 
-          {/* Premium Barnik Basu Profile Box card */}
-          <div className="flex items-center gap-3 p-4 rounded-3xl border border-slate-200/60 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30">
-            <div className="w-11 h-11 rounded-full overflow-hidden ring-2 ring-slate-100 dark:ring-slate-800 shrink-0">
-               <img 
-                 src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=200" 
-                 alt="Barnik Basu" 
-                 className="w-full h-full object-cover"
-               />
+          {/* Barnik Basu Profile Box card */}
+          <button 
+            onClick={() => setActiveTab("settings")}
+            className="w-full flex items-center gap-3 p-3.5 rounded-3xl border border-slate-200/60 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 text-left transition-all group"
+            title="Open Account Settings"
+          >
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-primary via-indigo-600 to-indigo-800 flex items-center justify-center text-white text-xs font-black ring-2 ring-slate-100 dark:ring-slate-800 shrink-0 group-hover:scale-105 transition-transform">
+               BB
             </div>
-            <div className="overflow-hidden">
-               <p className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight truncate">Barnik S.</p>
-               <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-1">B.Tech CSE '25</p>
+            <div className="overflow-hidden flex-1">
+               <p className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight truncate group-hover:text-brand-primary dark:group-hover:text-brand-teal transition-colors">Barnik Basu</p>
+               <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">B.Tech CSE • Sem 4</p>
             </div>
-          </div>
+          </button>
         </div>
       </aside>
 
@@ -154,11 +193,12 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
             >
               <Menu size={24} />
             </button>
-            <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-brand-primary rounded-lg flex items-center justify-center text-white">
-                    <Sparkles size={18} />
+            <div className="flex items-center gap-2.5">
+                <IIITKCrest size={32} />
+                <div>
+                  <span className="font-heading font-bold text-base text-slate-900 dark:text-brand-teal tracking-tight block leading-tight">IIITK Sarthi</span>
+                  <span className="text-[9px] text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider block">IIIT Kalyani</span>
                 </div>
-                <span className="font-bold text-lg text-slate-900 dark:text-brand-teal tracking-tight">Sarthi</span>
             </div>
           </div>
 
@@ -168,7 +208,7 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
                 <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500" />
                 <input 
                    type="text"
-                   placeholder="Search grades, courses, or students..."
+                   placeholder="Search courses, library books, mess menu, or notices..."
                    className="w-full pl-11 pr-16 py-3 bg-slate-50/80 dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800 rounded-2xl text-xs font-semibold text-slate-700 dark:text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-brand-primary dark:focus:ring-brand-teal transition-all"
                 />
                 <kbd className="absolute right-3 top-1/2 -translate-y-1/2 px-2 py-0.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-md text-[9px] text-slate-400 dark:text-slate-500 font-mono font-black shadow-sm pointer-events-none">
@@ -180,31 +220,34 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
           <div className="flex items-center gap-2 md:gap-4 text-slate-600 dark:text-slate-400">
             {/* Dark Mode Toggle */}
             <button 
+              id="dark-mode-toggle"
               onClick={toggleDarkMode}
               className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-all active:scale-90 relative group"
               aria-label="Toggle Dark Mode"
+              title="Toggle Dark Mode"
             >
-               {isDarkMode ? <Sun size={20} className="text-brand-gold animate-in spin-in-90 duration-500" /> : <Moon size={20} className="text-brand-primary animate-in spin-in-[-90] duration-500" />}
+               {isDarkMode ? <Sun size={20} className="text-amber-400 animate-in spin-in-90 duration-500" /> : <Moon size={20} className="text-brand-primary animate-in spin-in-[-90] duration-500" />}
             </button>
 
-            {/* Notification Bell */}
-            <button className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-all relative group">
-               <Bell size={20} className="group-hover:rotate-12 transition-transform" />
-               <span className="absolute top-3 right-3 w-2 h-2 bg-status-danger rounded-full border-2 border-white dark:border-slate-900"></span>
-            </button>
+            {/* Global AdminBroadcast Notification Bell with unread badge & quick actions */}
+            <NotificationDropdown setActiveTab={setActiveTab} />
 
             {/* Help / Question Icon */}
-            <button className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-all relative group">
+            <button 
+              onClick={() => setIsAIChatOpen(true)}
+              className="p-3 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-full transition-all relative group"
+              title="Sarthi AI Campus Assistant"
+            >
                <HelpCircle size={20} />
             </button>
 
-            {/* Session Spring '24 Dropdown Indicator */}
+            {/* Session Spring '26 Dropdown Indicator */}
             <div className="relative">
               <button 
                 onClick={() => setShowSessionMenu(!showSessionMenu)}
                 className="flex items-center gap-2 px-4 py-2.5 bg-slate-50 dark:bg-slate-900 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs font-black uppercase tracking-widest text-slate-700 dark:text-slate-300 transition-all active:scale-95 shadow-sm"
               >
-                <span>Session: Spring '24</span>
+                <span>Spring '26</span>
                 <ChevronDown size={14} className={cn("transition-transform", showSessionMenu ? "rotate-180" : "")} />
               </button>
 
@@ -216,9 +259,9 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
                     exit={{ opacity: 0, y: 8 }}
                     className="absolute right-0 mt-2 w-48 bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 rounded-2xl shadow-xl p-2 z-50 text-xs font-bold text-slate-600 dark:text-slate-300"
                   >
-                    <button className="w-full text-left px-3 py-2 bg-slate-50 dark:bg-slate-800 text-brand-primary dark:text-brand-teal rounded-xl">Spring '24 (Active)</button>
-                    <button className="w-full text-left px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl mt-1">Autumn '23</button>
-                    <button className="w-full text-left px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl mt-1">Spring '23</button>
+                    <button className="w-full text-left px-3 py-2 bg-slate-50 dark:bg-slate-800 text-brand-primary dark:text-brand-teal rounded-xl">Spring '26 (Active)</button>
+                    <button className="w-full text-left px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl mt-1">Autumn '25</button>
+                    <button className="w-full text-left px-3 py-2 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl mt-1">Spring '25</button>
                   </motion.div>
                 )}
               </AnimatePresence>
@@ -226,18 +269,12 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
             
             <div className="h-6 w-[1px] bg-slate-200 dark:bg-slate-800 mx-1 hidden sm:block"></div>
             
-            <div className="flex items-center gap-3 cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/80 p-2 pr-4 rounded-full transition-all group">
-              <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-primary to-indigo-800 flex items-center justify-center text-white text-sm font-black ring-2 ring-offset-2 ring-slate-100 dark:ring-indigo-950/50 group-hover:scale-105 transition-transform">
-                BB
-              </div>
-              <div className="hidden sm:block">
-                 <div className="flex items-center gap-2">
-                    <span className="text-sm font-bold text-slate-900 dark:text-slate-100">Barnik Basu</span>
-                    <span className="px-2 py-0.5 bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary dark:text-brand-teal text-[10px] font-black rounded-md uppercase tracking-tighter shadow-sm">STUDENT</span>
-                 </div>
-                 <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">CSE • Year 2</p>
-              </div>
-            </div>
+            {/* User Profile Dropdown Menu */}
+            <ProfileDropdown 
+              setActiveTab={setActiveTab} 
+              isDarkMode={isDarkMode} 
+              toggleDarkMode={toggleDarkMode} 
+            />
           </div>
         </header>
 
@@ -264,62 +301,65 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
           whileHover={{ scale: 1.1, rotate: 5 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => setIsAIChatOpen(true)}
-          className="fixed bottom-24 lg:bottom-10 right-6 lg:right-10 w-16 h-16 bg-brand-primary text-white rounded-full shadow-2xl shadow-indigo-300 dark:shadow-none flex items-center justify-center z-40 group overflow-hidden"
+          className="fixed bottom-24 lg:bottom-10 right-6 lg:right-10 w-16 h-16 bg-brand-primary text-white rounded-full shadow-2xl shadow-indigo-500/20 dark:shadow-none flex items-center justify-center z-40 group overflow-hidden"
+          title="Open Sarthi AI"
         >
             <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"></div>
-            <Sparkles size={32} />
+            <Sparkles size={30} />
         </motion.button>
 
         {/* AI Chat Overlay */}
         <AnimatePresence>
-            {isAIChatOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-brand-navy/60 backdrop-blur-sm p-4">
-                    <motion.div 
-                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                        animate={{ opacity: 1, scale: 1, y: 0 }}
-                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                        className="w-full max-w-2xl max-h-[85vh] bg-white dark:bg-brand-navy rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden border border-white/20 dark:border-slate-800"
-                    >
-                        <div className="p-6 bg-brand-navy dark:bg-brand-primary text-white flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 bg-white/20 rounded-xl">
-                                    <Sparkles size={24} />
-                                </div>
-                                <div>
-                                    <h3 className="font-bold text-lg leading-tight">Sarthi AI</h3>
-                                    <p className="text-xs text-indigo-100">Your Intelligent Campus Companion</p>
-                                </div>
-                            </div>
-                            <button 
-                                onClick={() => setIsAIChatOpen(false)}
-                                className="p-2 hover:bg-white/10 rounded-xl transition-colors"
-                            >
-                                <X size={24} />
-                            </button>
-                        </div>
-                        <div className="flex-1 overflow-hidden">
-                            <SarthiAI />
-                        </div>
-                    </motion.div>
+          {isAIChatOpen && (
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/60 backdrop-blur-sm">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                className="relative w-full max-w-2xl bg-white dark:bg-brand-navy rounded-[2.5rem] shadow-2xl border border-slate-200 dark:border-slate-800 flex flex-col h-[650px] max-h-[85vh] overflow-hidden"
+              >
+                {/* Close Button Header */}
+                <div className="p-5 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <IIITKCrest size={32} />
+                    <div>
+                      <h3 className="font-heading text-lg font-bold text-slate-900 dark:text-white">
+                        Sarthi AI Campus Assistant
+                      </h3>
+                      <p className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">
+                        Indian Institute of Information Technology Kalyani
+                      </p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setIsAIChatOpen(false)}
+                    className="p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                  >
+                    <X size={20} />
+                  </button>
                 </div>
-            )}
+
+                <div className="flex-1 overflow-hidden">
+                  <SarthiAI />
+                </div>
+              </motion.div>
+            </div>
+          )}
         </AnimatePresence>
 
-        {/* Mobile Navigation Bar */}
-        <nav className="xl:hidden fixed bottom-6 left-6 right-6 h-20 bg-white/90 dark:bg-brand-navy/95 backdrop-blur-2xl border border-slate-200/50 dark:border-slate-800 flex items-center justify-between px-6 z-30 rounded-[2.2rem] shadow-2xl shadow-brand-navy/35 select-none overflow-hidden">
-          {[
-            { label: "Home", icon: LayoutDashboard, id: "dashboard" },
-            { label: "Schedule", icon: Calendar, id: "schedule" },
-            { label: "Tasks", icon: CheckSquare, id: "tasks" },
-            { label: "Map", icon: MapPin, id: "map" },
-          ].map((item) => {
+        {/* Mobile Bottom Navigation Bar */}
+        <nav className="xl:hidden fixed bottom-0 left-0 right-0 h-20 bg-white/90 dark:bg-brand-navy/90 backdrop-blur-xl border-t border-slate-200 dark:border-slate-800/80 flex items-center justify-around px-2 z-30 shadow-2xl">
+          {navItems.slice(0, 5).map((item) => {
             const isActive = activeTab === item.id;
             return (
               <button
                 key={item.id}
                 onClick={() => setActiveTab(item.id)}
-                className="relative flex flex-col items-center justify-center flex-1 h-full py-2 group transition-all"
-                aria-label={item.label}
+                className={cn(
+                  "flex flex-col items-center justify-center flex-1 h-full py-1 transition-all relative",
+                  isActive ? "text-brand-primary dark:text-brand-teal" : "text-slate-400 dark:text-slate-500"
+                )}
               >
                 {isActive && (
                   <motion.div
@@ -377,23 +417,25 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
               animate={{ x: 0 }}
               exit={{ x: "-100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed left-0 top-0 bottom-0 w-[85vw] max-w-sm bg-white dark:bg-brand-navy z-50 xl:hidden p-8 shadow-2xl flex flex-col"
+              className="fixed left-0 top-0 bottom-0 w-[85vw] max-w-sm bg-white dark:bg-brand-navy z-50 xl:hidden p-7 shadow-2xl flex flex-col"
             >
-              <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center justify-between mb-6 pb-4 border-b border-slate-100 dark:border-slate-800">
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-brand-primary rounded-2xl flex items-center justify-center text-white">
-                    <Sparkles size={24} />
-                  </div>
+                  <IIITKCrest size={40} />
                   <div>
-                    <span className="font-black text-2xl tracking-tighter text-slate-900 dark:text-white block leading-none">IIITK</span>
-                    <span className="text-[10px] font-black text-brand-primary dark:text-brand-teal tracking-widest uppercase">SARTHI OS</span>
+                    <span className="font-heading font-bold text-xl tracking-tight text-slate-900 dark:text-white block leading-none">
+                      IIITK Sarthi
+                    </span>
+                    <span className="text-[10px] font-bold text-slate-500 dark:text-slate-400 tracking-wider uppercase mt-0.5 block">
+                      Campus OS
+                    </span>
                   </div>
                 </div>
                 <button 
                   onClick={() => setIsSidebarOpen(false)}
                   className="p-2 text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-xl transition-colors"
                 >
-                  <X size={28} />
+                  <X size={24} />
                 </button>
               </div>
 
@@ -406,13 +448,13 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
                         setIsSidebarOpen(false);
                     }}
                     className={cn(
-                      "w-full flex items-center gap-4 px-6 py-4 rounded-2xl transition-all font-bold text-lg",
+                      "w-full flex items-center gap-4 px-5 py-3.5 rounded-2xl transition-all font-bold text-base",
                       activeTab === item.id 
                         ? "bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary dark:text-brand-teal" 
                         : "text-slate-600 dark:text-slate-400 active:bg-slate-50 dark:active:bg-slate-800"
                     )}
                   >
-                    <item.icon size={22} className={activeTab === item.id ? "text-brand-primary dark:text-brand-teal" : "text-slate-400"} />
+                    <item.icon size={20} className={activeTab === item.id ? "text-brand-primary dark:text-brand-teal" : "text-slate-400"} />
                     <span>{item.label}</span>
                   </button>
                 ))}
@@ -421,7 +463,7 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
               <div className="mt-4 p-4 bg-slate-50 dark:bg-slate-800/50 rounded-3xl flex items-center justify-between border border-slate-100 dark:border-slate-700/50">
                  <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-xl bg-white dark:bg-brand-navy flex items-center justify-center shadow-sm">
-                       {isDarkMode ? <Moon size={20} className="text-brand-primary" /> : <Sun size={20} className="text-brand-gold" />}
+                       {isDarkMode ? <Moon size={20} className="text-brand-teal" /> : <Sun size={20} className="text-amber-500" />}
                     </div>
                     <span className="font-bold text-sm text-slate-700 dark:text-slate-300">Dark Appearance</span>
                  </div>
@@ -439,18 +481,25 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
                  </button>
               </div>
 
-              <div className="mt-6 pt-6 border-t border-slate-100 dark:border-slate-800 flex items-center gap-4">
-                 <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-primary to-indigo-800 flex items-center justify-center text-white font-black text-lg">
+              <button 
+                onClick={() => {
+                  setActiveTab("settings");
+                  setIsSidebarOpen(false);
+                }}
+                className="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center gap-4 text-left w-full hover:opacity-85 transition-opacity"
+                title="Open Account Settings"
+              >
+                 <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-primary to-indigo-800 flex items-center justify-center text-white font-black text-base shadow-md">
                     BB
                  </div>
                  <div>
-                    <p className="font-black text-slate-900 dark:text-slate-200">Barnik Basu</p>
-                    <div className="flex items-center gap-2 mt-1">
-                        <span className="px-2 py-0.5 bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary dark:text-brand-teal text-[10px] font-black rounded-md uppercase tracking-tighter">STUDENT</span>
-                        <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-none">CSE • Year 2</p>
+                    <p className="font-heading font-bold text-slate-900 dark:text-slate-200">Barnik Basu</p>
+                    <div className="flex items-center gap-2 mt-0.5">
+                        <span className="px-2 py-0.5 bg-brand-primary/10 dark:bg-brand-primary/20 text-brand-primary dark:text-brand-teal text-[9px] font-black rounded-md uppercase tracking-wider">STUDENT</span>
+                        <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest leading-none">B.Tech CSE • Sem 4</p>
                     </div>
                  </div>
-              </div>
+              </button>
             </motion.aside>
           </>
         )}
@@ -458,4 +507,3 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
     </div>
   );
 }
-

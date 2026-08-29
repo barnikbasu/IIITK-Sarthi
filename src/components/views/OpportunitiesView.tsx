@@ -2,7 +2,7 @@ import { Briefcase, Zap, Star, Filter, ArrowRight, Compass, X, Check, Upload, He
 import { motion, AnimatePresence } from "motion/react";
 import { opportunities as initialOpps } from "../../data/mockData";
 import { cn } from "../../lib/utils";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface OppItem {
   id: string;

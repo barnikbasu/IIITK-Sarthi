@@ -2,7 +2,7 @@ import { Clock, MapPin, User, GraduationCap, Calendar, CheckCircle2, Loader2, X,
 import { motion, AnimatePresence } from "motion/react";
 import { weeklySchedule } from "../../data/mockData";
 import { cn } from "../../lib/utils";
-import { useState } from "react";
+import React, { useState } from "react";
 
 interface ScheduleSlot {
   time: string;

@@ -1,6 +1,6 @@
 import { MapPin, Navigation, Search, Layers, Compass, ExternalLink, X, HelpCircle, Check, ArrowRight, ChevronRight } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { cn } from "../../lib/utils";
 
 interface CampusLocation {

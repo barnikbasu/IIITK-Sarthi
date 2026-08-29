@@ -1,7 +1,8 @@
-import { Users, Calendar, Trophy, Image, MessageSquare, Info, Plus, X, Check, CheckCircle2, ChevronRight, Send, HelpCircle } from "lucide-react";
+import { Users, Calendar, Trophy, Image, MessageSquare, Info, Plus, X, Check, CheckCircle2, ChevronRight, Send, HelpCircle, BookOpen } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../../lib/utils";
-import { useState } from "react";
+import React, { useState } from "react";
+import PeerStudyMatch from "../clubs/PeerStudyMatch";
 
 interface Club {
   id: string;
@@ -218,6 +219,9 @@ export default function ClubsView() {
               <span className="font-black text-xs uppercase tracking-widest">Register Club</span>
           </motion.button>
       </div>
+
+      {/* 🤝 Peer Study Partner & Subject Matchmaker Card */}
+      <PeerStudyMatch onTriggerToast={triggerToast} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Priority Events RSVP Tracker */}

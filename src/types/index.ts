@@ -107,3 +107,41 @@ export interface UserProfile {
   department: string;
   semester?: number;
 }
+
+export interface AdminBroadcastNotice {
+  id: string;
+  title: string;
+  summary: string;
+  department: string;
+  timestamp: string;
+  urgency: "Critical" | "Urgent" | "Standard";
+  category: "Academic" | "Security" | "Hostel" | "Placement" | "General";
+  actionLabel?: string;
+  actionTab?: string;
+  read?: boolean;
+}
+
+export interface PeerStudyGroup {
+  id: string;
+  name: string;
+  subject: string;
+  topic: string;
+  members: string[];
+  maxMembers: number;
+  location: string;
+  meetingTime: string;
+  difficulty: "Beginner" | "Intermediate" | "Exam Sprint";
+  creator: string;
+  joined?: boolean;
+}
+
+export interface SubjectAttendance {
+  id?: string;
+  code: string;
+  name: string;
+  subject?: string;
+  attended: number;
+  total: number;
+  faculty: string;
+  status?: "Safe" | "Warning" | "Critical";
+}
