@@ -107,9 +107,12 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
   }, [isDarkMode]);
 
   return (
-    <div className="flex h-screen bg-slate-50 dark:bg-bg-dark overflow-hidden font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300">
+    <div className="flex h-screen bg-bg-light dark:bg-bg-dark overflow-hidden font-sans text-slate-900 dark:text-slate-100 transition-colors duration-300">
+      <a href="#main-content" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xl focus:bg-brand-primary focus:px-4 focus:py-3 focus:text-sm focus:font-bold focus:text-white">
+        Skip to main content
+      </a>
       {/* Desktop Sidebar with Official Crest */}
-      <aside className="hidden xl:flex flex-col w-72 bg-white dark:bg-brand-navy border-r border-slate-200 dark:border-slate-800/80">
+      <aside className="hidden xl:flex flex-col w-64 bg-white/95 dark:bg-brand-navy border-r border-slate-200/80 dark:border-slate-800/80">
         <div className="p-6 pb-5 flex items-center gap-3.5 border-b border-slate-100 dark:border-slate-800/60">
           <div className="relative group">
             <IIITKCrest size={44} />
@@ -183,7 +186,7 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 flex flex-col relative overflow-hidden">
+      <main id="main-content" className="flex-1 flex flex-col relative overflow-hidden">
         {/* Top Header */}
         <header className="h-20 lg:h-24 bg-white/70 dark:bg-brand-navy/70 backdrop-blur-xl border-b border-slate-200 dark:border-slate-800/50 flex items-center justify-between px-6 lg:px-10 z-20">
           <div className="flex items-center gap-4 xl:hidden">

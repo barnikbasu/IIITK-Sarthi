@@ -3,29 +3,40 @@
 @theme {
   --font-sans: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Bengali", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Rozha One", "Playfair Display", Georgia, serif;
-  
-  /* Brand Palette - Prestigious IIIT Kalyani Heritage */
-  --color-brand-primary: #1A4FD8;
-  --color-brand-navy: #0F172A;
-  --color-brand-teal: #0D9488;
-  --color-brand-gold: #D97706;
-  --color-brand-crimson: #BE123C;
-  
-  /* Backgrounds */
-  --color-bg-light: #F8FAFC;
-  --color-bg-dark: #0B1120;
-  
-  /* Status */
-  --color-status-success: #10B981;
-  --color-status-warning: #F59E0B;
-  --color-status-danger: #EF4444;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+  /* Modern Indian Academic palette: indigo ink, copper, paper, and signal colors */
+  --color-brand-primary: #2447d8;
+  --color-brand-navy: #111827;
+  --color-brand-teal: #0f766e;
+  --color-brand-gold: #c46b2b;
+  --color-brand-crimson: #b4233f;
+  --color-bg-light: #f5f7fb;
+  --color-bg-dark: #0b1220;
+  --color-status-success: #16866e;
+  --color-status-warning: #b86b21;
+  --color-status-danger: #b4233f;
 }
 
 @layer base {
+  * {
+    border-color: color-mix(in srgb, currentColor 12%, transparent);
+  }
+
+  html {
+    background: var(--color-bg-light);
+    scroll-behavior: smooth;
+  }
+
+  html.dark {
+    background: var(--color-bg-dark);
+  }
+
   body {
+    min-width: 320px;
     font-family: var(--font-sans);
     transition: background-color 0.3s ease, color 0.3s ease;
-    @apply bg-bg-light text-slate-900 border-slate-200 dark:bg-bg-dark dark:text-slate-100 dark:border-slate-800;
+    @apply bg-bg-light text-slate-900 dark:bg-bg-dark dark:text-slate-100;
   }
 
   h1, h2, h3, .font-heading {
@@ -33,15 +44,21 @@
     letter-spacing: -0.015em;
   }
 
-  body.dark-mode {
-    background-color: #0B1120;
-    color: #F8FAFC;
+  ::selection {
+    background: color-mix(in srgb, var(--color-brand-primary) 24%, transparent);
   }
 
-  body.dark-mode .card,
-  body.dark-mode .container {
-    background-color: #0F172A;
-    color: #F8FAFC;
+  button, a, input, textarea, select {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
