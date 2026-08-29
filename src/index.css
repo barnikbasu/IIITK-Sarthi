@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Tailwind dark variants follow the app's explicit root class, not OS preference */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --font-sans: "Noto Sans", "Noto Sans Devanagari", "Noto Sans Bengali", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Rozha One", "Playfair Display", Georgia, serif;
