@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "npm run build:server && node dist/server.cjs",
+    "dev": "vite --host 0.0.0.0 --port 3000",
     "build:server": "esbuild server.ts --bundle --platform=node --format=cjs --packages=external --sourcemap --outfile=dist/server.cjs",
     "build": "vite build && npm run build:server",
     "start": "node dist/server.cjs",
