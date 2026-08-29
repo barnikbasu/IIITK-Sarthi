@@ -3,8 +3,8 @@ export interface FacultyMember {
   name: string;
   salutation: string;
   designation: "Professor" | "Associate Professor" | "Assistant Professor" | "Visiting Faculty" | "Adjunct Faculty" | "Director";
-  department: "Computer Science & Engineering" | "Electronics & Communication Engineering" | "Mathematics & Basic Sciences" | "Physics & Space Sciences" | "Humanities & Interdisciplinary";
-  departmentShort: "CSE" | "ECE" | "Mathematics" | "Physics" | "Sciences";
+  department: "Computer Science & Engineering" | "Electronics & Communication Engineering" | "Mathematics & Basic Sciences" | "Physics & Space Sciences" | "Humanities & Interdisciplinary" | "Directorate" | "Executive Leadership";
+  departmentShort: "CSE" | "ECE" | "Mathematics" | "Physics" | "Sciences" | "Directorate" | "";
   roleTitle?: string; // e.g. "Director", "Faculty In-Charge Academics", "Faculty In-Charge Ph.D."
   email: string;
   personalWebsite?: string;
@@ -196,9 +196,9 @@ export const officialFacultyList: FacultyMember[] = [
     name: "Prof. Suman Chakraborty",
     salutation: "Prof.",
     designation: "Director",
-    department: "Computer Science & Engineering",
-    departmentShort: "CSE",
-    roleTitle: "Director, IIIT Kalyani & Director, IIT Kharagpur • Chairman, Senate",
+    department: "Directorate",
+    departmentShort: "",
+    roleTitle: "Director",
     email: "director@iiitkalyani.ac.in",
     personalWebsite: "https://iiitkalyani.ac.in/director",
     googleScholarUrl: "https://scholar.google.com/citations?user=suman_chakraborty",

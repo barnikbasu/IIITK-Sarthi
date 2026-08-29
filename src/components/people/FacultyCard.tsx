@@ -73,13 +73,23 @@ export default function FacultyCard({
 
           <div className="space-y-1 min-w-0 flex-1">
             <div className="flex items-center gap-1.5 flex-wrap">
-              <span className={`px-2 py-0.5 text-[10px] font-bold rounded-md uppercase tracking-wider border ${getDeptBadgeStyle(faculty.departmentShort)}`}>
-                {faculty.departmentShort}
-              </span>
-              {faculty.roleTitle && (
-                <span className="px-2 py-0.5 text-[10px] font-semibold rounded-md bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 truncate max-w-[170px]">
-                  {faculty.roleTitle}
+              {faculty.designation === "Director" ? (
+                <span className="px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider rounded-md bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800/80">
+                  Director
                 </span>
+              ) : (
+                <>
+                  {faculty.departmentShort && (
+                    <span className={`px-2 py-0.5 text-[10px] font-bold rounded-md uppercase tracking-wider border ${getDeptBadgeStyle(faculty.departmentShort)}`}>
+                      {faculty.departmentShort}
+                    </span>
+                  )}
+                  {faculty.roleTitle && (
+                    <span className="px-2 py-0.5 text-[10px] font-semibold rounded-md bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 truncate max-w-[170px]">
+                      {faculty.roleTitle}
+                    </span>
+                  )}
+                </>
               )}
             </div>
 

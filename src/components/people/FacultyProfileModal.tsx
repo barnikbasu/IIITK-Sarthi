@@ -90,13 +90,23 @@ export default function FacultyProfileModal({
             {/* Profile Overview */}
             <div className="flex-1 space-y-3">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="px-3 py-1 text-xs font-bold rounded-full bg-brand-primary/10 text-brand-primary dark:text-blue-400 border border-brand-primary/20 uppercase tracking-wider">
-                  {faculty.department}
-                </span>
-                {faculty.roleTitle && (
-                  <span className="px-3 py-1 text-xs font-semibold rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60">
-                    {faculty.roleTitle}
+                {faculty.designation === "Director" ? (
+                  <span className="px-3 py-1 text-xs font-bold rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-900 dark:text-amber-200 border border-amber-300 dark:border-amber-800/80 uppercase tracking-wider">
+                    Director
                   </span>
+                ) : (
+                  <>
+                    {faculty.department && (
+                      <span className="px-3 py-1 text-xs font-bold rounded-full bg-brand-primary/10 text-brand-primary dark:text-blue-400 border border-brand-primary/20 uppercase tracking-wider">
+                        {faculty.department}
+                      </span>
+                    )}
+                    {faculty.roleTitle && (
+                      <span className="px-3 py-1 text-xs font-semibold rounded-full bg-amber-50 dark:bg-amber-950/40 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60">
+                        {faculty.roleTitle}
+                      </span>
+                    )}
+                  </>
                 )}
                 {faculty.verifiedInstitutional && (
                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 text-[11px] font-medium rounded-full bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
