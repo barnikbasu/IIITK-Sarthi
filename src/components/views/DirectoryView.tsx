@@ -1,99 +1,198 @@
-import { User, Search, Building, GraduationCap, Phone, Mail, CheckCircle, Loader2, MessageSquare } from "lucide-react";
-import { motion, AnimatePresence } from "motion/react";
-import { contacts } from "../../data/mockData";
-import { useState } from "react";
-import { cn } from "../../lib/utils";
+import React, { useState } from "react";
+import PeopleHero from "../people/PeopleHero";
+import FacultyDirectory from "../people/FacultyDirectory";
+import AdministrationDirectory from "../people/AdministrationDirectory";
+import GovernanceView from "../people/GovernanceView";
+import ResearchExpertiseGraph from "../people/ResearchExpertiseGraph";
+import MessagingHub from "../people/messaging/MessagingHub";
+import WhoCanHelpModal from "../people/WhoCanHelpModal";
+import PeopleCommandPalette from "../people/PeopleCommandPalette";
+import FacultyProfileModal from "../people/FacultyProfileModal";
+import MessageComposerModal from "../people/messaging/MessageComposerModal";
+import AppointmentRequestModal from "../people/messaging/AppointmentRequestModal";
+import { 
+  FacultyMember, 
+  AdministrativeOfficer, 
+  AcademicAttachment, 
+  MessageCategory,
+  sampleAcademicConversations
+} from "../../data/peopleData";
 
 export default function DirectoryView() {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [actionState, setActionState] = useState<{ id: string, type: 'connect' | 'call' } | null>(null);
+  const [activeTab, setActiveTab] = useState<"faculty" | "administration" | "governance" | "research" | "messages">("faculty");
+  const [isWhoCanHelpOpen, setIsWhoCanHelpOpen] = useState(false);
+  const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
+  
+  // Modals & Active Profiles
+  const [selectedFacultyForProfile, setSelectedFacultyForProfile] = useState<FacultyMember | null>(null);
+  const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
+  
+  // Direct Messaging modal state
+  const [isComposerOpen, setIsComposerOpen] = useState(false);
+  const [directComposeTarget, setDirectComposeTarget] = useState<{
+    name: string;
+    email: string;
+    role: string;
+  } | null>(null);
 
-  const filtered = contacts.filter(contact => 
-    contact.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    contact.role.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    contact.department.toLowerCase().includes(searchQuery.toLowerCase())
-  );
+  // Appointment Modal
+  const [isAppointmentOpen, setIsAppointmentOpen] = useState(false);
+  const [targetFacultyForAppointment, setTargetFacultyForAppointment] = useState<FacultyMember | null>(null);
 
-  const handleAction = (id: string, type: 'connect' | 'call') => {
-    setActionState({ id, type });
-    setTimeout(() => setActionState(null), 2000);
+  // Unread badge count
+  const unreadMessagesCount = sampleAcademicConversations.reduce((acc, c) => acc + (c.unreadCount || 0), 0);
+
+  // Handlers
+  const handleOpenFacultyProfile = (faculty: FacultyMember) => {
+    setSelectedFacultyForProfile(faculty);
+    setIsProfileModalOpen(true);
   };
+
+  const handleSendMessageToFaculty = (faculty: FacultyMember) => {
+    setDirectComposeTarget({
+      name: faculty.name,
+      email: faculty.email,
+      role: `${faculty.designation} (${faculty.departmentShort})`
+    });
+    setIsComposerOpen(true);
+  };
+
+  const handleSendMessageToOfficer = (officer: AdministrativeOfficer) => {
+    setDirectComposeTarget({
+      name: officer.name,
+      email: officer.email,
+      role: `${officer.designation} (${officer.officeName})`
+    });
+    setIsComposerOpen(true);
+  };
+
+  const handleRequestAppointment = (faculty: FacultyMember) => {
+    setTargetFacultyForAppointment(faculty);
+    setIsAppointmentOpen(true);
+  };
+
+  const handleWhoCanHelpSelect = (targetEmail: string, targetName: string) => {
+    setDirectComposeTarget({
+      name: targetName,
+      email: targetEmail,
+      role: "Designated Institutional Authority"
+    });
+    setIsComposerOpen(true);
+  };
+
   return (
-    <div className="space-y-8 pb-20">
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">Campus Directory</h2>
-          <p className="text-slate-500 dark:text-slate-400 font-medium tracking-tight">Find and connect with faculty, staff, and departments.</p>
-        </div>
-        <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-            <input 
-                type="text" 
-                placeholder="Search community..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-6 py-4 bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 rounded-2xl w-full md:w-80 focus:ring-2 focus:ring-brand-primary outline-none transition-all dark:text-white font-bold text-sm"
-            />
-        </div>
+    <div className="space-y-8 pb-20 max-w-7xl mx-auto">
+      {/* Editorial Master Hero */}
+      <PeopleHero
+        activeTab={activeTab}
+        setActiveTab={setActiveTab}
+        onOpenWhoCanHelp={() => setIsWhoCanHelpOpen(true)}
+        onOpenCommandPalette={() => setIsCommandPaletteOpen(true)}
+        unreadCount={unreadMessagesCount}
+      />
+
+      {/* Main Tab Views */}
+      <div className="pt-2">
+        {activeTab === "faculty" && (
+          <FacultyDirectory
+            onSendMessage={handleSendMessageToFaculty}
+            onRequestAppointment={handleRequestAppointment}
+            onOpenWhoCanHelp={() => setIsWhoCanHelpOpen(true)}
+          />
+        )}
+
+        {activeTab === "administration" && (
+          <AdministrationDirectory
+            onSendMessage={handleSendMessageToOfficer}
+            onOpenWhoCanHelp={() => setIsWhoCanHelpOpen(true)}
+          />
+        )}
+
+        {activeTab === "governance" && (
+          <GovernanceView />
+        )}
+
+        {activeTab === "research" && (
+          <ResearchExpertiseGraph
+            onSelectFaculty={handleOpenFacultyProfile}
+            onSendMessage={handleSendMessageToFaculty}
+          />
+        )}
+
+        {activeTab === "messages" && (
+          <MessagingHub
+            onOpenWhoCanHelp={() => setIsWhoCanHelpOpen(true)}
+            directComposeTarget={directComposeTarget}
+            onClearDirectCompose={() => setDirectComposeTarget(null)}
+          />
+        )}
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map((contact, idx) => (
-          <motion.div
-            key={contact.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.05 }}
-            className="bg-white dark:bg-brand-navy rounded-[2.5rem] p-8 border border-slate-200 dark:border-slate-800 shadow-sm hover:shadow-xl transition-all group hover:border-brand-primary/20"
-          >
-            <div className="flex items-center gap-4 mb-6">
-               <div className="w-16 h-16 rounded-2xl bg-brand-primary/10 text-brand-primary dark:text-brand-teal flex items-center justify-center overflow-hidden border border-brand-primary/10 shadow-inner">
-                  {contact.avatar ? <img src={contact.avatar} alt={contact.name} className="w-full h-full object-cover" /> : <User size={32} />}
-               </div>
-               <div>
-                  <h4 className="font-black text-slate-900 dark:text-slate-100 tracking-tight text-lg leading-tight uppercase">{contact.name}</h4>
-                  <p className="text-[10px] font-black text-brand-primary dark:text-brand-teal uppercase tracking-widest mt-1 leading-tight">{contact.role}</p>
-               </div>
-            </div>
+      {/* "Who Can Help?" Navigator Modal */}
+      <WhoCanHelpModal
+        isOpen={isWhoCanHelpOpen}
+        onClose={() => setIsWhoCanHelpOpen(false)}
+        onSelectAction={handleWhoCanHelpSelect}
+      />
 
-            <div className="space-y-4">
-                <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-tight">
-                    <Building size={16} className="text-brand-primary dark:text-brand-teal opacity-60" />
-                    <span>{contact.department}</span>
-                </div>
-                <div className="flex items-center gap-3 text-slate-500 dark:text-slate-400 text-xs font-bold tracking-tight">
-                    <Mail size={16} className="text-brand-primary dark:text-brand-teal opacity-60" />
-                    <span className="truncate">{contact.email}</span>
-                </div>
-            </div>
+      {/* Global Command Palette (⌘K) */}
+      <PeopleCommandPalette
+        isOpen={isCommandPaletteOpen}
+        onClose={() => setIsCommandPaletteOpen(false)}
+        onSelectFaculty={(faculty) => {
+          setSelectedFacultyForProfile(faculty);
+          setIsProfileModalOpen(true);
+        }}
+        onSelectAdministration={(officer) => {
+          setActiveTab("administration");
+        }}
+        onSelectTab={(tab) => setActiveTab(tab)}
+        onOpenWhoCanHelp={() => setIsWhoCanHelpOpen(true)}
+      />
 
-            <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 flex gap-3">
-                <button 
-                    onClick={() => handleAction(contact.id, 'connect')}
-                    className={cn(
-                        "flex-1 py-3 text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-lg",
-                        actionState?.id === contact.id && actionState.type === 'connect'
-                            ? "bg-status-success text-white" 
-                            : "bg-brand-primary text-white hover:opacity-90 shadow-brand-primary/20"
-                    )}
-                >
-                    {actionState?.id === contact.id && actionState.type === 'connect' ? "Requested" : "Connect"}
-                </button>
-                <button 
-                    onClick={() => handleAction(contact.id, 'call')}
-                    className={cn(
-                        "px-4 py-3 rounded-xl transition-all border",
-                        actionState?.id === contact.id && actionState.type === 'call'
-                            ? "bg-slate-900 text-white border-slate-900"
-                            : "bg-brand-primary/5 dark:bg-brand-primary/10 text-brand-primary dark:text-brand-teal border-brand-primary/10 hover:bg-brand-primary/10"
-                    )}
-                >
-                    {actionState?.id === contact.id && actionState.type === 'call' ? <CheckCircle size={18} /> : <Phone size={16} />}
-                </button>
-            </div>
-          </motion.div>
-        ))}
-      </div>
+      {/* Faculty Profile Modal */}
+      <FacultyProfileModal
+        faculty={selectedFacultyForProfile}
+        isOpen={isProfileModalOpen}
+        onClose={() => setIsProfileModalOpen(false)}
+        onSendMessage={(faculty) => {
+          setIsProfileModalOpen(false);
+          handleSendMessageToFaculty(faculty);
+        }}
+        onRequestAppointment={(faculty) => {
+          setIsProfileModalOpen(false);
+          handleRequestAppointment(faculty);
+        }}
+      />
+
+      {/* Standalone Message Composer Modal (Triggered from cards/buttons) */}
+      <MessageComposerModal
+        isOpen={isComposerOpen}
+        onClose={() => {
+          setIsComposerOpen(false);
+          setDirectComposeTarget(null);
+        }}
+        recipientName={directComposeTarget?.name}
+        recipientEmail={directComposeTarget?.email}
+        recipientRole={directComposeTarget?.role}
+        onSend={(data) => {
+          // Switch to messages tab and view
+          setActiveTab("messages");
+        }}
+      />
+
+      {/* Appointment Request Modal */}
+      <AppointmentRequestModal
+        isOpen={isAppointmentOpen}
+        onClose={() => {
+          setIsAppointmentOpen(false);
+          setTargetFacultyForAppointment(null);
+        }}
+        faculty={targetFacultyForAppointment}
+        onSubmit={(appointmentData) => {
+          console.log("Appointment booked:", appointmentData);
+        }}
+      />
     </div>
   );
 }
