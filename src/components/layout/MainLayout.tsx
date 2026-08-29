@@ -23,7 +23,8 @@ import {
   LineChart,
   HelpCircle,
   ChevronDown,
-  Settings
+  Settings,
+  Network
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../../lib/utils";
@@ -40,11 +41,12 @@ interface MainLayoutProps {
 
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, id: "dashboard" },
+  { label: "Institute Atlas", icon: Network, id: "institute" },
+  { label: "Clubs", icon: Users, id: "clubs" },
   { label: "Schedule", icon: Calendar, id: "schedule" },
   { label: "Attendance", icon: LineChart, id: "analytics" },
   { label: "Resources", icon: BookMarked, id: "resources" },
   { label: "Marketplace", icon: ShoppingBag, id: "market" },
-  { label: "Clubs", icon: Users, id: "clubs" },
   { label: "Tasks", icon: CheckSquare, id: "tasks" },
   { label: "Opportunities", icon: Briefcase, id: "opportunities" },
   { label: "Directory", icon: Search, id: "directory" },

@@ -12,6 +12,7 @@ import DirectoryView from "./components/views/DirectoryView";
 import ClubsView from "./components/views/ClubsView";
 import AnalyticsView from "./components/views/AnalyticsView";
 import SettingsView from "./components/views/SettingsView";
+import InstituteAtlasView from "./components/institute/InstituteAtlasView";
 import { useState } from "react";
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
     <MainLayout activeTab={activeTab} setActiveTab={setActiveTab}>
       <div className="space-y-4">
         {activeTab === "dashboard" && <UnifiedDashboard setActiveTab={setActiveTab} />}
+        {activeTab === "institute" && <InstituteAtlasView onNavigateTab={setActiveTab} />}
         {activeTab === "tasks" && <TasksView />}
         {activeTab === "opportunities" && <OpportunitiesView />}
         {activeTab === "resources" && <ResourcesView />}
