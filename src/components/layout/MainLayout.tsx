@@ -69,7 +69,7 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
   const [showSessionMenu, setShowSessionMenu] = useState(false);
 
   const toggleDarkMode = () => {
-    setIsDarkMode(prev => !prev);
+    setIsDarkMode((prev) => !prev);
   };
 
   useEffect(() => {
