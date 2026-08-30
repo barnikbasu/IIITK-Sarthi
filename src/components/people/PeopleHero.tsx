@@ -88,8 +88,8 @@ export default function PeopleHero({
 
           <div className="grid grid-cols-2 gap-2 text-center pt-1 border-t border-slate-100 dark:border-slate-700/60">
             <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60">
-              <span className="block text-xl font-serif font-bold text-brand-primary dark:text-blue-400">17</span>
-              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Verified Faculty</span>
+              <span className="block text-xl font-serif font-bold text-brand-primary dark:text-blue-400">15</span>
+              <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400">Permanent Faculty</span>
             </div>
             <div className="p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900/60">
               <span className="block text-xl font-serif font-bold text-emerald-600 dark:text-emerald-400">6</span>

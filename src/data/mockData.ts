@@ -55,11 +55,11 @@ export const notices: Notice[] = [
 export const contacts: Contact[] = [
   {
     id: "c1",
-    name: "Dr. Sandeep Kumar",
-    role: "HOD CSE",
+    name: "Dr. Sanjay Chatterji",
+    role: "Faculty In-Charge, Web & IT",
     designation: "Assistant Professor",
     department: "CSE",
-    email: "sandeep.k@iiitkalyani.ac.in",
+    email: "sanjayc@iiitkalyani.ac.in",
   },
   {
     id: "c2",
@@ -192,11 +192,11 @@ export const adminBroadcasts: AdminBroadcastNotice[] = [
 ];
 
 export const subjectAttendanceData: SubjectAttendance[] = [
-  { id: "sa1", code: "CS201", name: "Operating Systems Core", subject: "Operating Systems Core", attended: 28, total: 32, faculty: "Dr. S. K. Mandal", status: "Safe" },
-  { id: "sa2", code: "CS202", name: "Database Management Systems", subject: "Database Management Systems", attended: 24, total: 30, faculty: "Dr. S. Kumar", status: "Safe" },
-  { id: "sa3", code: "CS203", name: "Data Structures & Algorithms", subject: "Data Structures & Algorithms", attended: 22, total: 25, faculty: "Prof. S. Sen", status: "Safe" },
-  { id: "sa4", code: "EC204", name: "Computer Organization & Architecture", subject: "Computer Organization & Architecture", attended: 18, total: 25, faculty: "Dr. A. Gupta", status: "Warning" },
-  { id: "sa5", code: "MA205", name: "Discrete & Advanced Mathematics", subject: "Discrete & Advanced Mathematics", attended: 21, total: 26, faculty: "Dr. P. Bagchi", status: "Safe" }
+  { id: "sa1", code: "CS201", name: "Operating Systems Core", subject: "Operating Systems Core", attended: 28, total: 32, faculty: "Dr. SK Hafizul Islam", status: "Safe" },
+  { id: "sa2", code: "CS202", name: "Database Management Systems", subject: "Database Management Systems", attended: 24, total: 30, faculty: "Dr. Sanjay Chatterji", status: "Safe" },
+  { id: "sa3", code: "CS203", name: "Data Structures & Algorithms", subject: "Data Structures & Algorithms", attended: 22, total: 25, faculty: "Dr. Oishila Bandyopadhyay", status: "Safe" },
+  { id: "sa4", code: "EC204", name: "Computer Organization & Architecture", subject: "Computer Organization & Architecture", attended: 18, total: 25, faculty: "Dr. Amit Ranjan Azad", status: "Warning" },
+  { id: "sa5", code: "MA205", name: "Discrete & Advanced Mathematics", subject: "Discrete & Advanced Mathematics", attended: 21, total: 26, faculty: "Dr. Anirban Lakshman", status: "Safe" }
 ];
 
 export const peerStudyGroupsMock: PeerStudyGroup[] = [
@@ -271,16 +271,16 @@ export const weeklySchedule: ScheduleItem[] = [
   {
     day: "Monday",
     slots: [
-      { time: "09:00 AM", subject: "Operating Systems", room: "LT-1", type: "Lecture", faculty: "Dr. S. Kumar" },
-      { time: "11:00 AM", subject: "Computer Networks", room: "LT-2", type: "Lecture", faculty: "Prof. P. Bagchi" },
-      { time: "02:00 PM", subject: "OS Lab", room: "Lab-1", type: "Lab", faculty: "Dr. S. Kumar" },
+      { time: "09:00 AM", subject: "Operating Systems", room: "LT-1", type: "Lecture", faculty: "Dr. SK Hafizul Islam" },
+      { time: "11:00 AM", subject: "Computer Networks", room: "LT-2", type: "Lecture", faculty: "Dr. Debasish Bera" },
+      { time: "02:00 PM", subject: "OS Lab", room: "Lab-1", type: "Lab", faculty: "Dr. SK Hafizul Islam" },
     ]
   },
   {
     day: "Tuesday",
     slots: [
-      { time: "10:00 AM", subject: "Microprocessors", room: "LT-1", type: "Lecture", faculty: "Dr. A. Gupta" },
-      { time: "12:00 PM", subject: "Economics", room: "LT-3", type: "Lecture", faculty: "Ms. T. Seal" },
+      { time: "10:00 AM", subject: "Microprocessors & IoT", room: "LT-1", type: "Lecture", faculty: "Dr. Dalia Nandi" },
+      { time: "12:00 PM", subject: "Natural Language Processing", room: "LT-3", type: "Lecture", faculty: "Dr. Sanjay Chatterji" },
     ]
   }
 ];

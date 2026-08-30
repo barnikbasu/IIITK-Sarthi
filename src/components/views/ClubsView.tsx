@@ -61,7 +61,7 @@ const initialEvents: EventItem[] = [
   { 
     id: "e2", 
     title: "GDG Gemini & Multimodal AI Study Jam", 
-    clubName: "GDG on Campus, IIIT Kalyani", 
+    clubName: "GDG on Campus IIIT Kalyani", 
     date: "20", 
     month: "NOV", 
     location: "Auditorium Hall 1 & Online", 
@@ -82,7 +82,7 @@ const initialEvents: EventItem[] = [
   },
   { 
     id: "e4", 
-    title: "Autonomous Maze Rover Sprint", 
+    title: "Enigma: Autonomous Maze Rover Challenge", 
     clubName: "S.E.A.L. Robotics", 
     date: "12", 
     month: "DEC", 

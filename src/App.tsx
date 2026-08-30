@@ -13,6 +13,7 @@ import ClubsView from "./components/views/ClubsView";
 import AnalyticsView from "./components/views/AnalyticsView";
 import SettingsView from "./components/views/SettingsView";
 import InstituteAtlasView from "./components/institute/InstituteAtlasView";
+import EventsView from "./components/views/EventsView";
 import { useState } from "react";
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
       <div className="space-y-4">
         {activeTab === "dashboard" && <UnifiedDashboard setActiveTab={setActiveTab} />}
         {activeTab === "institute" && <InstituteAtlasView onNavigateTab={setActiveTab} />}
+        {activeTab === "events" && <EventsView />}
         {activeTab === "tasks" && <TasksView />}
         {activeTab === "opportunities" && <OpportunitiesView />}
         {activeTab === "resources" && <ResourcesView />}

@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { 
   officialResearchAreas, 
-  officialFacultyList, 
+  approvedFaculty, 
   ResearchAreaDetail, 
   FacultyMember 
 } from "../../data/peopleData";
@@ -33,7 +33,7 @@ export default function ResearchExpertiseGraph({
   const [selectedAreaId, setSelectedAreaId] = useState<string>(officialResearchAreas[0].id);
 
   const activeArea = officialResearchAreas.find(a => a.id === selectedAreaId) || officialResearchAreas[0];
-  const mentorFaculty = officialFacultyList.filter(f => activeArea.associatedFacultyIds?.includes(f.id));
+  const mentorFaculty = approvedFaculty.filter(f => activeArea.associatedFacultyIds?.includes(f.id));
 
   return (
     <div className="space-y-8">

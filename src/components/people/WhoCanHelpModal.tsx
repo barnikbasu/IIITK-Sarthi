@@ -19,7 +19,7 @@ import {
   helpQueryMappings, 
   HelpQueryMapping,
   officialAdministrationList,
-  officialFacultyList,
+  approvedFaculty,
   officialInstitutionalBodies
 } from "../../data/peopleData";
 import { IIITKCrest } from "../common/IIITKLogo";
@@ -58,7 +58,7 @@ export default function WhoCanHelpModal({
     : undefined;
   
   const matchedFaculty = activeIssue.recommendedFacultyId 
-    ? officialFacultyList.find(f => f.id === activeIssue.recommendedFacultyId) 
+    ? approvedFaculty.find(f => f.id === activeIssue.recommendedFacultyId) 
     : undefined;
 
   const matchedBody = activeIssue.recommendedBodyId 

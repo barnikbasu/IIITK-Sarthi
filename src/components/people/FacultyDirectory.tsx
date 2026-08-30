@@ -14,7 +14,7 @@ import {
   Building2,
   HelpCircle
 } from "lucide-react";
-import { FacultyMember, officialFacultyList } from "../../data/peopleData";
+import { FacultyMember, approvedFaculty } from "../../data/peopleData";
 import FacultyCard from "./FacultyCard";
 import FacultyProfileModal from "./FacultyProfileModal";
 
@@ -55,9 +55,7 @@ export default function FacultyDirectory({
   // Designations List
   const designations = [
     { label: "All Designations", value: "All" },
-    { label: "Director", value: "Director" },
     { label: "Assistant Professor", value: "Assistant Professor" },
-    { label: "Visiting Faculty / Professor", value: "Visiting Faculty" },
   ];
 
   // Research Domains Quick Tags
@@ -77,7 +75,7 @@ export default function FacultyDirectory({
 
   // Filter Logic
   const filteredFaculty = useMemo(() => {
-    return officialFacultyList.filter((faculty) => {
+    return approvedFaculty.filter((faculty) => {
       // 1. Search Query Match
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase().trim();
@@ -229,7 +227,7 @@ export default function FacultyDirectory({
           )}
 
           <div className="ml-auto text-xs font-medium text-slate-500 dark:text-slate-400">
-            Showing <strong className="text-slate-900 dark:text-slate-100">{filteredFaculty.length}</strong> of {officialFacultyList.length} verified faculty
+            Showing <strong className="text-slate-900 dark:text-slate-100">{filteredFaculty.length}</strong> of {approvedFaculty.length} verified faculty
           </div>
         </div>
 

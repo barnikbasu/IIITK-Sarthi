@@ -2,6 +2,7 @@ export interface ClubInfo {
   id: string;
   name: string;
   shortName: string;
+  officialFullName?: string;
   category: "Technical" | "Cultural" | "Sports" | "Arts & Media" | "Literary & Knowledge";
   parentBody: "Gymkhana" | "Technical Community" | "Creative Media" | "Professional Branch" | "Developer Community";
   isGymkhana: boolean;
@@ -48,7 +49,7 @@ export const officialClubsData: ClubInfo[] = [
     iconName: "Drama",
     bannerGradient: "from-rose-600 to-amber-700",
     leadCoordinator: "Dramatics Secretary / Spotlight Lead",
-    facultyAdvisor: "Dr. Raghunath Dey",
+    facultyAdvisor: "Dr. Oishila Bandyopadhyay",
     contactEmail: "spotlight@iiitkalyani.ac.in",
     membersCount: 95,
     upcomingEvents: ["Annual Nukkad Natak Showcase", "Stage Drama & Voice Acting Bootcamp", "48-Hour Scriptwriting Challenge"],
@@ -68,7 +69,7 @@ export const officialClubsData: ClubInfo[] = [
     iconName: "Trophy",
     bannerGradient: "from-emerald-600 to-green-700",
     leadCoordinator: "Sports Secretary (Gymkhana)",
-    facultyAdvisor: "Dr. Alik Pramanick",
+    facultyAdvisor: "Dr. Amit Ranjan Azad",
     contactEmail: "sports@iiitkalyani.ac.in",
     membersCount: 320,
     upcomingEvents: ["IIITK Premier League (IPL Cricket)", "Inter-Batch Football Championship", "Night Badminton Open"],
@@ -128,7 +129,7 @@ export const officialClubsData: ClubInfo[] = [
     iconName: "GitBranch",
     bannerGradient: "from-cyan-600 to-blue-700",
     leadCoordinator: "Open Source Lead",
-    facultyAdvisor: "Dr. Odelu Vanga",
+    facultyAdvisor: "Dr. SK Hafizul Islam",
     contactEmail: "freescape@iiitkalyani.ac.in",
     membersCount: 185,
     upcomingEvents: ["GSoC 2027 Mentorship Track", "Open Campus OS HackNight", "Git & FOSS Collaborative Sprint"],
@@ -148,7 +149,7 @@ export const officialClubsData: ClubInfo[] = [
     iconName: "Bot",
     bannerGradient: "from-emerald-600 to-teal-700",
     leadCoordinator: "Robotics Lead",
-    facultyAdvisor: "Dr. Dhrubasish Sarkar",
+    facultyAdvisor: "Dr. Dalia Nandi",
     contactEmail: "seal@iiitkalyani.ac.in",
     membersCount: 140,
     upcomingEvents: ["Autonomous Maze Rover Sprint", "Drone Dynamics & Flight Controller Lab", "Embedded IoT & Edge AI Hackathon"],
@@ -168,7 +169,7 @@ export const officialClubsData: ClubInfo[] = [
     iconName: "BookOpen",
     bannerGradient: "from-sky-600 to-blue-800",
     leadCoordinator: "Literary Secretary",
-    facultyAdvisor: "Dr. Bidyut Patra",
+    facultyAdvisor: "Dr. Sudeshna Mondal",
     contactEmail: "udaan@iiitkalyani.ac.in",
     membersCount: 90,
     upcomingEvents: ["Youth Parliamentary Debate 2026", "Chai & Poetry Open Mic", "Creative Writing & Microfiction Contest"],
@@ -188,7 +189,7 @@ export const officialClubsData: ClubInfo[] = [
     iconName: "Sparkles",
     bannerGradient: "from-amber-600 to-rose-600",
     leadCoordinator: "Dance Coordinator",
-    facultyAdvisor: "Dr. Anirban Roy",
+    facultyAdvisor: "Dr. Rinky Sha",
     contactEmail: "groovz@iiitkalyani.ac.in",
     membersCount: 100,
     upcomingEvents: ["Campus Flashmob 2026", "Freestyle Dance Battles Season 4", "Classical & Urban Choreography Workshop"],
@@ -217,23 +218,24 @@ export const officialClubsData: ClubInfo[] = [
   },
   {
     id: "gdg-campus",
-    name: "GDG on Campus, IIIT Kalyani",
-    shortName: "GDG on Campus",
+    name: "GDG on Campus IIIT Kalyani",
+    officialFullName: "GDG on Campus — Indian Institute of Information Technology Kalyani",
+    shortName: "GDG on Campus IIIT Kalyani",
     category: "Technical",
     parentBody: "Developer Community",
     isGymkhana: false,
-    shortDescription: "Developer community around Google technologies, software development, workshops, projects and collaborative learning.",
-    detailedDescription: "Google Developer Groups (GDG) on Campus, IIIT Kalyani is a developer community centered on Google technologies, software development, workshops, open projects and collaborative learning. It hosts hands-on study jams on Google Cloud, Android, Flutter, Web, and Gemini AI, guiding students to participate in the global Google Solution Challenge.",
+    shortDescription: "A student developer community focused on peer learning, technical talks, hands-on workshops, projects and developer-focused events.",
+    detailedDescription: "A student developer community focused on peer learning, technical talks, hands-on workshops, projects and developer-focused events. The official GDG page describes GDG on Campus as a university-based community for students interested in Google developer technologies.",
     icon: "🌐",
     iconName: "Code2",
     bannerGradient: "from-indigo-600 via-sky-600 to-emerald-600",
     leadCoordinator: "GDG Campus Lead",
-    facultyAdvisor: "Dr. Sandeep Kumar",
+    facultyAdvisor: "Dr. Sanjay Chatterji",
     contactEmail: "gdg@iiitkalyani.ac.in",
     membersCount: 230,
     upcomingEvents: ["Google Solution Challenge Hackathon", "Gemini & Multimodal AI Study Jam", "Android Jetpack & Flutter Bootcamp"],
     pastHighlights: ["Google Cloud Study Jam (100+ Badges)", "DevFest Regional Chapter"],
-    tags: ["GDG", "Google Technologies", "Software Dev", "Solution Challenge", "Collaborative Learning"]
+    tags: ["GDG on Campus", "Google Technologies", "Software Dev", "Solution Challenge", "Collaborative Learning"]
   },
   {
     id: "esports",
@@ -410,22 +412,22 @@ export const instituteStructureData: InstituteNode[] = [
           },
           {
             id: "gdg-campus",
-            name: "GDG on Campus",
+            name: "GDG on Campus IIIT Kalyani",
             category: "Developer Community",
             icon: "🌐",
             iconName: "Code2",
-            description: "Developer community around Google technologies, software development, workshops, projects and collaborative learning.",
+            description: "A student developer community focused on peer learning, technical talks, hands-on workshops, projects and developer-focused events.",
             headOrLead: "GDG Campus Lead",
             contact: "gdg@iiitkalyani.ac.in",
             keyFunctions: ["Google Developer technologies hands-on bootcamps", "Google Cloud, Android, Web, and Gemini AI workshops", "Solution Challenge project mentorship and hackathons"],
             children: [
               {
                 id: "gdg-iiitk",
-                name: "IIIT Kalyani Chapter",
+                name: "GDG on Campus — Indian Institute of Information Technology Kalyani",
                 category: "GDG Chapter",
                 icon: "💻",
                 iconName: "Terminal",
-                description: "Official Google Developer Groups on Campus chapter at IIIT Kalyani.",
+                description: "Official GDG on Campus chapter at IIIT Kalyani for students interested in Google developer technologies.",
                 headOrLead: "GDG Lead & Core Team",
                 contact: "gdg.campus@iiitkalyani.ac.in",
                 keyFunctions: ["Google Solution Challenge hackathons", "DevFest collaborations", "Study jams on Cloud, Flutter, and AI"]
@@ -495,20 +497,20 @@ export const instituteStructureData: InstituteNode[] = [
     iconName: "Calendar",
     description: "Centralized calendar of annual fests, hackathons, technical competitions, cultural galas, workshops, and sports tournaments.",
     keyFunctions: [
-      "Annual Tech Fest 'Kommune' and Cultural Festival",
-      "Status Code 1, ByteRace, CodeCombat, and National Hackathons",
-      "Faculty guest lectures, AI/ML workshops, and research symposiums",
+      "Renesa: Annual Techno-Cultural Fest of IIIT Kalyani",
+      "StatusCode 36-Hour National Hackathon and Enigma Maze Robotics",
+      "Anukriti Cultural Celebration and Ekatra Annual Day & Farewell",
       "Inter-Hostel Sports Tournaments and Annual Athletics Meet"
     ],
     children: [
-      { id: "ev-fests", name: "Fests", category: "Annual Celebrations", icon: "🎪", iconName: "Sparkles", description: "Flagship annual technical and cultural fests including Kommune.", keyFunctions: ["Annual Tech Fest Kommune", "Cultural Night", "Freshers & Farewell Celebrations"] },
-      { id: "ev-hackathons", name: "Hackathons", category: "Technical", icon: "⚡", iconName: "Zap", description: "24-48 hour coding sprints, hardware hackathons, and open innovation challenges.", keyFunctions: ["Status Code 1", "Smart India Hackathon Internals", "FOSS Sprint"] },
-      { id: "ev-competitions", name: "Competitions", category: "Contests", icon: "🏆", iconName: "Trophy", description: "Algorithmic contests, debate championships, robo-wars, and UI/UX designathons.", keyFunctions: ["CodeCombat", "ByteRace", "Designathon", "Debate League"] },
-      { id: "ev-workshops", name: "Workshops", category: "Hands-on Learning", icon: "🛠️", iconName: "Wrench", description: "Specialized skill bootcamps covering AI/ML, Cloud, Web3, ROS Robotics, and IoT.", keyFunctions: ["Industry Expert Seminars", "Hands-on Lab Bootcamps", "Certification Tracks"] },
-      { id: "ev-cultural", name: "Cultural", category: "Performances", icon: "🎭", iconName: "Drama", description: "Dance competitions, acoustic music nights, dramatics, and festival celebrations.", keyFunctions: ["Symphony Acoustic Nights", "Groovz Dance Battles", "Spotlight Nukkad"] },
+      { id: "ev-fests", name: "Renesa & Fests", category: "Annual Celebrations", icon: "🎪", iconName: "Sparkles", description: "Flagship annual techno-cultural extravaganza Renesa, cultural nights, and festival showcases.", keyFunctions: ["Renesa Techno-Cultural Fest", "Music & Pro-Nights", "Cultural & Tech Showcases"] },
+      { id: "ev-hackathons", name: "StatusCode & Hackathons", category: "Technical", icon: "⚡", iconName: "Zap", description: "StatusCode 36-hour hackathon, FOSS sprints, and national innovation challenges.", keyFunctions: ["StatusCode 36-Hour Hackathon", "Google Solution Challenge", "FOSS Sprint"] },
+      { id: "ev-competitions", name: "Competitions & Robotics", category: "Contests", icon: "🏆", iconName: "Trophy", description: "Enigma maze robotics, algorithmic CP contests, debate championships, and designathons.", keyFunctions: ["Enigma Maze Robotics", "Algorush CP League", "Designathon"] },
+      { id: "ev-workshops", name: "Workshops", category: "Hands-on Learning", icon: "🛠️", iconName: "Wrench", description: "Specialized skill bootcamps covering AI/ML, Cloud, Web3, ROS Robotics, and IoT.", keyFunctions: ["Industry Expert Seminars", "GDG AI Study Jams", "Certification Tracks"] },
+      { id: "ev-cultural", name: "Anukriti & Cultural", category: "Performances", icon: "🎭", iconName: "Drama", description: "Anukriti cultural celebration, dance competitions, acoustic music nights, and dramatics.", keyFunctions: ["Anukriti Cultural Fest", "Spring Serenade & Talent Hunt", "Spotlight Nukkad"] },
       { id: "ev-sports", name: "Sports", category: "Athletics", icon: "⚽", iconName: "Activity", description: "IIITK Premier League (IPL), football leagues, badminton, chess, and table tennis cups.", keyFunctions: ["Inter-Batch Cricket League", "Hostel Football Championship", "Athletics Meet"] },
       { id: "ev-academic", name: "Academic", category: "Scholastic", icon: "📖", iconName: "BookOpen", description: "Research symposiums, PhD thesis colloquiums, and department orientation programs.", keyFunctions: ["National Science Day Seminar", "Research Colloquium", "Curriculum Orientation"] },
-      { id: "ev-institutional", name: "Institutional", category: "Official Ceremonies", icon: "🏛️", iconName: "Building2", description: "Convocation, Foundation Day, Independence Day, Republic Day, and Senate open houses.", keyFunctions: ["Annual Convocation", "Institute Foundation Day", "National Observances"] }
+      { id: "ev-institutional", name: "Ekatra & Institutional", category: "Official Ceremonies", icon: "🏛️", iconName: "Building2", description: "Ekatra Annual Day & Farewell, Convocation, Foundation Day, Independence Day, and Republic Day.", keyFunctions: ["Ekatra Annual Day", "Annual Convocation", "National Observances"] }
     ]
   },
   {

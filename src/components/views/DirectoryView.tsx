@@ -10,12 +10,14 @@ import PeopleCommandPalette from "../people/PeopleCommandPalette";
 import FacultyProfileModal from "../people/FacultyProfileModal";
 import MessageComposerModal from "../people/messaging/MessageComposerModal";
 import AppointmentRequestModal from "../people/messaging/AppointmentRequestModal";
+import DirectorLeadershipCard from "../people/DirectorLeadershipCard";
 import { 
   FacultyMember, 
   AdministrativeOfficer, 
   AcademicAttachment, 
   MessageCategory,
-  sampleAcademicConversations
+  sampleAcademicConversations,
+  officialDirectorProfile
 } from "../../data/peopleData";
 
 export default function DirectoryView() {
@@ -57,6 +59,15 @@ export default function DirectoryView() {
     setIsComposerOpen(true);
   };
 
+  const handleSendMessageToDirectorate = () => {
+    setDirectComposeTarget({
+      name: `Office of the Director (${officialDirectorProfile.name})`,
+      email: officialDirectorProfile.email,
+      role: "Directorate Secretariat & Institutional Affairs"
+    });
+    setIsComposerOpen(true);
+  };
+
   const handleSendMessageToOfficer = (officer: AdministrativeOfficer) => {
     setDirectComposeTarget({
       name: officer.name,
@@ -94,11 +105,19 @@ export default function DirectoryView() {
       {/* Main Tab Views */}
       <div className="pt-2">
         {activeTab === "faculty" && (
-          <FacultyDirectory
-            onSendMessage={handleSendMessageToFaculty}
-            onRequestAppointment={handleRequestAppointment}
-            onOpenWhoCanHelp={() => setIsWhoCanHelpOpen(true)}
-          />
+          <div className="space-y-8">
+            {/* Dedicated Executive Leadership Card */}
+            <DirectorLeadershipCard
+              onSendMessageToDirectorate={handleSendMessageToDirectorate}
+            />
+
+            {/* Permanent Teaching & Research Faculty Directory */}
+            <FacultyDirectory
+              onSendMessage={handleSendMessageToFaculty}
+              onRequestAppointment={handleRequestAppointment}
+              onOpenWhoCanHelp={() => setIsWhoCanHelpOpen(true)}
+            />
+          </div>
         )}
 
         {activeTab === "administration" && (

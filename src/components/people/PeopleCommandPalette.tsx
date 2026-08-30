@@ -12,7 +12,7 @@ import {
   Sparkles
 } from "lucide-react";
 import { 
-  officialFacultyList, 
+  approvedFaculty, 
   officialAdministrationList, 
   officialInstitutionalBodies, 
   officialResearchAreas,
@@ -64,7 +64,7 @@ export default function PeopleCommandPalette({
   const q = query.toLowerCase().trim();
 
   // Search Results
-  const matchedFaculty = officialFacultyList.filter(f => 
+  const matchedFaculty = approvedFaculty.filter(f => 
     !q || f.name.toLowerCase().includes(q) || f.department.toLowerCase().includes(q) || f.researchInterests.some(r => r.toLowerCase().includes(q))
   ).slice(0, 4);
 

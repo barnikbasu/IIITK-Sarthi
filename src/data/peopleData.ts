@@ -187,41 +187,142 @@ export interface ModerationReport {
 }
 
 // -------------------------------------------------------------
-// OFFICIAL IIIT KALYANI FACULTY DATASET (Verified Institutional Directory)
+// APPROVED PERMANENT FACULTY NAMES (Strict Canonical Dataset)
 // -------------------------------------------------------------
 
-export const officialFacultyList: FacultyMember[] = [
-  {
-    id: "fac-suman-chakraborty",
-    name: "Prof. Suman Chakraborty",
-    salutation: "Prof.",
-    designation: "Director",
-    department: "Directorate",
-    departmentShort: "",
-    roleTitle: "Director",
-    email: "director@iiitkalyani.ac.in",
-    personalWebsite: "https://iiitkalyani.ac.in/director",
-    googleScholarUrl: "https://scholar.google.com/citations?user=suman_chakraborty",
-    avatarUrl: "https://iiitkalyani.ac.in/api/serve/2026/08/11/suman.png",
-    initials: "SC",
-    highestDegree: "Ph.D., FNA, FNAE, FNASc, FASc",
-    almaMater: "Indian Institute of Science (IISc) / IIT Kharagpur",
-    researchInterests: ["Microfluidics", "Computational Fluid Dynamics", "Biomedical Microdevices", "Transport Phenomena", "AI in Physical Systems"],
-    expertiseTags: ["Director", "Fluid Mechanics", "Microfluidics", "Bio-MEMS", "Point-of-Care Devices", "AI in Physical Systems"],
-    biography: "Prof. Suman Chakraborty is the Director of IIT Kharagpur and has assumed the additional charge of Director, IIIT Kalyani. A distinguished academician and Shanti Swarup Bhatnagar Awardee, he is a Fellow of several prestigious national academies (FNA, FNAE, FNASc, FASc). At IIIT Kalyani, he is leading the institute's pursuit of academic excellence, cutting-edge research, innovation, industry collaboration, and institution building, with a vision focused on strengthening the institute as an Institute of National Importance.",
-    officeLocation: "Director's Office, LHC 3rd Floor, IIIT Kalyani Campus",
-    officeHours: "By Prior Appointment with Directorate Secretariat",
-    acceptingResearchStudents: true,
-    acceptsMessages: true,
-    messagingPolicy: "Official institutional governance and high-level academic inquiries only. Please route routine student requests through respective Deans/HODs/AR.",
-    verifiedInstitutional: true,
-    publicationsCount: 380,
-    featuredPublications: [
-      { title: "Microfluidics and Microscale Transport Phenomena", venue: "CRC Press & Annual Reviews", year: 2023, citations: 420 },
-      { title: "Point-of-Care Diagnostics: Electrokinetics and Multiphase Flows", venue: "Nature Communications / Lab on a Chip", year: 2024, citations: 210 }
-    ],
-    administrativeRoles: ["Director, IIIT Kalyani", "Director, IIT Kharagpur", "Chairperson (Ex Officio), Senate", "Member (Ex-Officio), Board of Governors"]
-  },
+export const APPROVED_PERMANENT_FACULTY_NAMES: readonly string[] = [
+  "Dr. Amit Ranjan Azad",
+  "Dr. Anirban Lakshman",
+  "Dr. Bhaskar Biswas",
+  "Dr. Dalia Nandi",
+  "Dr. Debasish Bera",
+  "Dr. Imon Mukherjee",
+  "Dr. Oishila Bandyopadhyay",
+  "Dr. Pratik Chakraborty",
+  "Dr. Rinky Sha",
+  "Dr. Sanjay Chatterji",
+  "Dr. Sanjoy Pratihar",
+  "Dr. SK Hafizul Islam",
+  "Dr. Soumen Pandit",
+  "Dr. Sudeshna Mondal",
+  "Dr. Uma Das"
+] as const;
+
+export const APPROVED_FACULTY_NAMES = APPROVED_PERMANENT_FACULTY_NAMES;
+
+/**
+ * Strict Global Governance Validator:
+ * Verifies if a given name belongs to the 15 approved permanent faculty members.
+ */
+export function isApprovedFaculty(name?: string | null): boolean {
+  if (!name) return false;
+  const clean = name.trim();
+  return (APPROVED_PERMANENT_FACULTY_NAMES as readonly string[]).includes(clean) ||
+    APPROVED_PERMANENT_FACULTY_NAMES.some(n => clean.toLowerCase() === n.toLowerCase() || (clean.length > 5 && n.toLowerCase().includes(clean.toLowerCase())));
+}
+
+export const isApprovedPermanentFaculty = isApprovedFaculty;
+
+/**
+ * Validates and resolves a faculty name against the canonical whitelist.
+ * If not approved, returns the fallback string (default: "Instructor information unavailable").
+ */
+export function validateFacultyName(
+  name?: string | null, 
+  fallback: string = "Instructor information unavailable"
+): string {
+  if (!name) return fallback;
+  const clean = name.trim();
+  const match = APPROVED_PERMANENT_FACULTY_NAMES.find(
+    n => clean.toLowerCase() === n.toLowerCase() || (clean.length > 5 && n.toLowerCase().includes(clean.toLowerCase()))
+  );
+  return match || fallback;
+}
+
+/**
+ * Formats an instructor display string. Returns null if unapproved and omission is requested.
+ */
+export function formatInstructorDisplay(
+  facultyName?: string | null,
+  fallback: string = "Instructor information unavailable"
+): string {
+  return validateFacultyName(facultyName, fallback);
+}
+
+// -------------------------------------------------------------
+// DEDICATED INSTITUTIONAL DIRECTOR PROFILE (Executive Leadership)
+// -------------------------------------------------------------
+
+export interface DirectorProfile {
+  id: string;
+  name: string;
+  salutation: string;
+  role: string;
+  designation: string;
+  institute: string;
+  email: string;
+  initials: string;
+  personalWebsite?: string;
+  googleScholarUrl?: string;
+  avatarUrl: string;
+  highestDegree: string;
+  almaMater: string;
+  fellowships: string[];
+  awards: string[];
+  strategicPillars: {
+    title: string;
+    description: string;
+  }[];
+  biography: string;
+  officeLocation: string;
+  officeHours: string;
+  secretariatContact: string;
+  secretariatEmail: string;
+  acceptsOfficialInquiries: boolean;
+  governanceRoles: string[];
+}
+
+export const officialDirectorProfile: DirectorProfile = {
+  id: "director-suman-chakraborty",
+  name: "Prof. Suman Chakraborty",
+  salutation: "Prof.",
+  role: "Director",
+  designation: "Director, Indian Institute of Information Technology Kalyani",
+  institute: "Indian Institute of Information Technology Kalyani",
+  email: "director@iiitkalyani.ac.in",
+  initials: "SC",
+  personalWebsite: "https://iiitkalyani.ac.in/director",
+  googleScholarUrl: "https://scholar.google.com/citations?user=suman_chakraborty",
+  avatarUrl: "https://iiitkalyani.ac.in/api/serve/2026/08/11/suman.png",
+  highestDegree: "Ph.D., FNA, FNAE, FNASc, FASc",
+  almaMater: "Indian Institute of Science (IISc) / IIT Kharagpur",
+  fellowships: ["Fellow, Indian National Science Academy (FNA)", "Fellow, Indian National Academy of Engineering (FNAE)", "Fellow, National Academy of Sciences, India (FNASc)", "Fellow, Indian Academy of Sciences (FASc)"],
+  awards: ["Shanti Swarup Bhatnagar Prize for Science & Technology", "Sir J.C. Bose National Fellowship", "Alexander von Humboldt Fellowship"],
+  strategicPillars: [
+    { title: "Academic Leadership", description: "Transforming computing, communications, and mathematical curriculum to meet frontier Industry 4.0 and global standards." },
+    { title: "Deep Research & Translation", description: "Fostering interdisciplinary research centers in AI/ML, Quantum Security, Microfluidics, and Space Sciences with national grants." },
+    { title: "Innovation & Startup Ecosystem", description: "Catalyzing student-led technology incubators, patent filings, and industry collaboration consortia." },
+    { title: "Institution Building", description: "Scaling state-of-the-art permanent campus infrastructure, central computing clusters, and international university linkages." }
+  ],
+  biography: "Prof. Suman Chakraborty is the Director of IIT Kharagpur and has assumed the additional charge of Director, IIIT Kalyani. A distinguished academician and Shanti Swarup Bhatnagar Awardee, he is a Fellow of several prestigious national academies (FNA, FNAE, FNASc, FASc). At IIIT Kalyani, he is leading the institute's pursuit of academic excellence, cutting-edge research, innovation, industry collaboration, and institution building, with a vision focused on strengthening the institute as an Institute of National Importance.",
+  officeLocation: "Director's Office, LHC 3rd Floor, IIIT Kalyani Campus",
+  officeHours: "By Prior Appointment with Directorate Secretariat",
+  secretariatContact: "Director's Secretariat: Room 301, LHC (Intercom: 1001)",
+  secretariatEmail: "director@iiitkalyani.ac.in",
+  acceptsOfficialInquiries: true,
+  governanceRoles: [
+    "Director, IIIT Kalyani",
+    "Director, IIT Kharagpur",
+    "Chairperson (Ex Officio), Senate, IIIT Kalyani",
+    "Member (Ex-Officio), Board of Governors, IIIT Kalyani"
+  ]
+};
+
+// -------------------------------------------------------------
+// APPROVED PERMANENT FACULTY DATASET (15 Members Strictly)
+// -------------------------------------------------------------
+
+export const approvedPermanentFacultyList: FacultyMember[] = [
   {
     id: "fac-amit-ranjan-azad",
     name: "Dr. Amit Ranjan Azad",
@@ -467,37 +568,6 @@ export const officialFacultyList: FacultyMember[] = [
     coursesTaught: ["Analog & Digital Communication", "Wireless Communication Networks", "Information Theory", "Signals & Systems"]
   },
   {
-    id: "fac-rabindranath-bera",
-    name: "Prof. Dr. Rabindranath Bera",
-    salutation: "Prof. Dr.",
-    designation: "Visiting Faculty",
-    department: "Electronics & Communication Engineering",
-    departmentShort: "ECE",
-    roleTitle: "Visiting Professor",
-    email: "rbera@iiitkalyani.ac.in",
-    personalWebsite: "https://scholar.google.com/citations?hl=en&user=j30d4mUAAAAJ&view_op=list_works&sortby=pubdate",
-    avatarUrl: "https://iiitkalyani.ac.in/api/serve/2026/03/09/Rabindranath_1773044790_e8551023.png",
-    initials: "RB",
-    highestDegree: "Ph.D. in Microwave & Wireless Engineering",
-    almaMater: "Calcutta University / Leading National Institutes",
-    researchInterests: ["Wireless Network", "5G Communication", "Radar & Satellite Systems", "Broadband Wireless Transceivers", "Millimeter-Wave Propagation"],
-    expertiseTags: ["Wireless Network", "5G Communication", "Radar Systems", "Satellite Communications", "Broadband RF"],
-    biography: "Prof. Dr. Rabindranath Bera is a distinguished Visiting Professor in the ECE Department at IIIT Kalyani. With decades of pioneering contributions in radar communication, microwave systems, and 5G cellular architectures, he mentors advanced research initiatives across wireless telecommunications.",
-    officeLocation: "Advanced Wireless Research Lab, LHC 2nd Floor, IIIT Kalyani Campus",
-    officeHours: "Thursday & Friday: 11:30 AM – 2:30 PM",
-    acceptingResearchStudents: true,
-    acceptsMessages: true,
-    messagingPolicy: "M.Tech and Ph.D. scholars working on 5G/6G physical layer architecture, millimeter-wave communications, and radar systems are welcome to consult.",
-    verifiedInstitutional: true,
-    publicationsCount: 140,
-    featuredPublications: [
-      { title: "Millimeter-Wave Wireless Transceiver Architecture for 5G Ultra-Dense Networks", venue: "IEEE Communications Magazine", year: 2023, citations: 112 },
-      { title: "Cognitive Radar and Wireless Communication Co-existence in Shared Spectrum", venue: "IEEE Aerospace and Electronic Systems Magazine", year: 2024, citations: 68 }
-    ],
-    administrativeRoles: ["Senior Research Advisor, Advanced Wireless Center"],
-    coursesTaught: ["Advanced Wireless Communications", "Radar & Satellite Engineering", "5G Network Architecture"]
-  },
-  {
     id: "fac-rinky-sha",
     name: "Dr. Rinky Sha",
     salutation: "Dr.",
@@ -713,6 +783,58 @@ export const officialFacultyList: FacultyMember[] = [
     coursesTaught: ["Engineering Physics", "Electromagnetics & Optics", "Space Weather & Atmospheric Dynamics"]
   }
 ];
+
+// -------------------------------------------------------------
+// VISITING / ADJUNCT FACULTY (Segregated from Permanent Faculty)
+// -------------------------------------------------------------
+
+export const officialVisitingFacultyList: FacultyMember[] = [
+  {
+    id: "fac-rabindranath-bera",
+    name: "Prof. Dr. Rabindranath Bera",
+    salutation: "Prof. Dr.",
+    designation: "Visiting Faculty",
+    department: "Electronics & Communication Engineering",
+    departmentShort: "ECE",
+    roleTitle: "Visiting Professor",
+    email: "rbera@iiitkalyani.ac.in",
+    personalWebsite: "https://scholar.google.com/citations?hl=en&user=j30d4mUAAAAJ&view_op=list_works&sortby=pubdate",
+    avatarUrl: "https://iiitkalyani.ac.in/api/serve/2026/03/09/Rabindranath_1773044790_e8551023.png",
+    initials: "RB",
+    highestDegree: "Ph.D. in Microwave & Wireless Engineering",
+    almaMater: "Calcutta University / Leading National Institutes",
+    researchInterests: ["Wireless Network", "5G Communication", "Radar & Satellite Systems", "Broadband Wireless Transceivers", "Millimeter-Wave Propagation"],
+    expertiseTags: ["Wireless Network", "5G Communication", "Radar Systems", "Satellite Communications", "Broadband RF"],
+    biography: "Prof. Dr. Rabindranath Bera is a distinguished Visiting Professor in the ECE Department at IIIT Kalyani. With decades of pioneering contributions in radar communication, microwave systems, and 5G cellular architectures, he mentors advanced research initiatives across wireless telecommunications.",
+    officeLocation: "Advanced Wireless Research Lab, LHC 2nd Floor, IIIT Kalyani Campus",
+    officeHours: "Thursday & Friday: 11:30 AM – 2:30 PM",
+    acceptingResearchStudents: true,
+    acceptsMessages: true,
+    messagingPolicy: "M.Tech and Ph.D. scholars working on 5G/6G physical layer architecture, millimeter-wave communications, and radar systems are welcome to consult.",
+    verifiedInstitutional: true,
+    publicationsCount: 140,
+    featuredPublications: [
+      { title: "Millimeter-Wave Wireless Transceiver Architecture for 5G Ultra-Dense Networks", venue: "IEEE Communications Magazine", year: 2023, citations: 112 },
+      { title: "Cognitive Radar and Wireless Communication Co-existence in Shared Spectrum", venue: "IEEE Aerospace and Electronic Systems Magazine", year: 2024, citations: 68 }
+    ],
+    administrativeRoles: ["Senior Research Advisor, Advanced Wireless Center"],
+    coursesTaught: ["Advanced Wireless Communications", "Radar & Satellite Engineering", "5G Network Architecture"]
+  }
+];
+
+// Canonical authoritative faculty dataset export strictly containing the approved 15 permanent faculty
+export const approvedFaculty: FacultyMember[] = approvedPermanentFacultyList;
+export const officialFacultyList: FacultyMember[] = approvedPermanentFacultyList;
+
+export function getApprovedFacultyById(id: string): FacultyMember | undefined {
+  return approvedFaculty.find(f => f.id === id);
+}
+
+export function getApprovedFacultyByName(name: string): FacultyMember | undefined {
+  if (!name) return undefined;
+  const clean = name.trim().toLowerCase();
+  return approvedFaculty.find(f => f.name.toLowerCase() === clean || f.name.toLowerCase().includes(clean));
+}
 
 // -------------------------------------------------------------
 // OFFICIAL ADMINISTRATIVE OFFICERS (Verified Institutional Administration)

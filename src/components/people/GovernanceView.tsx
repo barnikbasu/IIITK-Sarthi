@@ -15,13 +15,13 @@ import {
   BookOpen,
   Calendar
 } from "lucide-react";
-import { officialInstitutionalBodies, officialFacultyList, InstitutionalBody } from "../../data/peopleData";
+import { officialInstitutionalBodies, officialDirectorProfile, InstitutionalBody } from "../../data/peopleData";
 import { IIITKCrest } from "../common/IIITKLogo";
 
 export default function GovernanceView() {
   const [selectedBodyId, setSelectedBodyId] = useState<string>("bog");
 
-  const director = officialFacultyList.find(f => f.designation === "Director");
+  const director = officialDirectorProfile;
   const activeBody = officialInstitutionalBodies.find(b => b.id === selectedBodyId) || officialInstitutionalBodies[0];
 
   return (

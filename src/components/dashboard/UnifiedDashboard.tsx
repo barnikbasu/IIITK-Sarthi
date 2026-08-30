@@ -107,9 +107,9 @@ export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps
       description: "Official Spring 2026 Mid-Semester examinations schedule released. Download seating plan from ERP."
     },
     {
-      id: "gdsc",
+      id: "gdg",
       title: "Web3 Bootcamp",
-      club: "GDSC IIITK",
+      club: "GDG on Campus IIIT Kalyani",
       image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80&w=400",
       time: "4h ago",
       description: "Hands-on Solidity & Smart Contract workshop this Saturday at CS Lab 2. Limited to 60 seats."
@@ -601,17 +601,10 @@ export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps
             {/* Secondary Notices List */}
             <div className="space-y-3">
               
-              {/* Notice 2: Syntax Error Hackathon */}
+              {/* Notice 2: StatusCode & Renesa Flagship Fest */}
               <div 
                 onClick={() => {
-                  setSelectedNotice({
-                    title: "Syntax Error Hackathon 2026 (SC2) - Registrations Open",
-                    dept: "GDSC & Coding Club IIIT Kalyani",
-                    time: "Feb 23, 2026",
-                    file: "SC2_Hackathon_Rulebook.pdf",
-                    size: "3.4 MB",
-                    content: "Gear up for 48 hours of intense coding, caffeine, and innovation! Form teams of up to 4 members. Early bird registrations get exclusive swag kits and mentoring by industry leaders."
-                  });
+                  setActiveTab("events");
                 }}
                 className="p-3.5 rounded-2xl bg-slate-50/70 dark:bg-slate-900/30 border border-slate-200/60 dark:border-slate-800/80 hover:border-brand-primary/40 cursor-pointer transition-all flex items-start gap-3 group"
               >
@@ -623,9 +616,9 @@ export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps
                     Flagship Event
                   </span>
                   <h5 className="font-bold text-xs text-slate-800 dark:text-slate-200 group-hover:text-brand-primary dark:group-hover:text-brand-teal transition-colors">
-                    Registration Open: Syntax Error Hackathon '26
+                    StatusCode 36-Hour Hackathon & Renesa Fest
                   </h5>
-                  <p className="text-[10px] text-slate-400 line-clamp-1">₹1,50,000+ Prize Pool • Devfolio</p>
+                  <p className="text-[10px] text-slate-400 line-clamp-1">Explore Renesa Fest, StatusCode Tracks & Annual Calendar</p>
                 </div>
               </div>
 

@@ -42,6 +42,7 @@ interface MainLayoutProps {
 const navItems = [
   { label: "Dashboard", icon: LayoutDashboard, id: "dashboard" },
   { label: "Institute Atlas", icon: Network, id: "institute" },
+  { label: "Events & Fests", icon: Sparkles, id: "events" },
   { label: "Clubs", icon: Users, id: "clubs" },
   { label: "Schedule", icon: Calendar, id: "schedule" },
   { label: "Attendance", icon: LineChart, id: "analytics" },

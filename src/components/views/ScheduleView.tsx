@@ -1,6 +1,7 @@
 import { Clock, MapPin, User, GraduationCap, Calendar, CheckCircle2, Loader2, X, Bell } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { weeklySchedule } from "../../data/mockData";
+import { isApprovedFaculty } from "../../data/peopleData";
 import { cn } from "../../lib/utils";
 import React, { useState } from "react";
 
@@ -138,10 +139,16 @@ export default function ScheduleView() {
                                 <MapPin size={12} className="text-brand-primary dark:text-brand-teal" />
                                 <span>{slot.room}</span>
                             </div>
-                            <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-tight">
-                                <User size={12} className="text-brand-primary dark:text-brand-teal" />
-                                <span>{slot.faculty}</span>
-                            </div>
+                            {slot.faculty && isApprovedFaculty(slot.faculty) ? (
+                              <div className="flex items-center gap-1.5 text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-tight">
+                                  <User size={12} className="text-brand-primary dark:text-brand-teal" />
+                                  <span>{slot.faculty}</span>
+                              </div>
+                            ) : (
+                              <div className="flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500 font-medium italic tracking-tight">
+                                  <span>Instructor information unavailable</span>
+                              </div>
+                            )}
                         </div>
                     </div>
 

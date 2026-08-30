@@ -20,6 +20,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../../lib/utils";
 import { SubjectAttendance } from "../../types";
 import { subjectAttendanceData as initialAttendance } from "../../data/mockData";
+import { isApprovedFaculty } from "../../data/peopleData";
 
 interface AttendancePredictorProps {
   setActiveTab?: (tab: string) => void;
@@ -273,7 +274,9 @@ export default function AttendancePredictor({ setActiveTab }: AttendancePredicto
                         </h5>
                       </div>
                       <p className="text-[10px] text-slate-400 font-medium mt-0.5">
-                        Faculty: {sub.faculty}
+                        {sub.faculty && isApprovedFaculty(sub.faculty) 
+                          ? `Faculty: ${sub.faculty}` 
+                          : "Instructor information unavailable"}
                       </p>
                     </div>
 
