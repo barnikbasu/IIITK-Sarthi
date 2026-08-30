@@ -11,10 +11,12 @@ import {
   Zap
 } from "lucide-react";
 import { motion } from "motion/react";
-import { dashboardMetrics, currentUser } from "../../data/mockData";
+import { dashboardMetrics } from "../../data/mockData";
 import { cn } from "../../lib/utils";
+import { useStudentProfile } from "../../context/StudentProfileContext";
 
 export default function HeroSection({ setActiveTab }: { setActiveTab: (tab: string) => void }) {
+  const { firstName } = useStudentProfile();
   const { attendance, nextClass, messMenu } = dashboardMetrics;
 
   const attendanceColors = {
@@ -40,7 +42,7 @@ export default function HeroSection({ setActiveTab }: { setActiveTab: (tab: stri
              Everything You Need Today
           </h2>
           <p className="text-slate-500 dark:text-slate-400 font-medium mt-1">
-            Hi {currentUser.name.split(' ')[0]}, here's what's happening on campus right now.
+            Hi {firstName}, here's what's happening on campus right now.
           </p>
         </div>
         <div className="flex items-center gap-2 px-4 py-2 bg-brand-primary/5 dark:bg-brand-primary/10 border border-brand-primary/10 dark:border-brand-primary/20 rounded-full text-brand-primary dark:text-brand-teal text-sm font-bold shadow-sm">

@@ -100,12 +100,41 @@ export interface DashboardMetrics {
   };
 }
 
+export interface StudentProfile {
+  // Core Information
+  fullName: string;
+  department: string;
+  studentId: string;
+  
+  // Personal / Medical / Emergency Details
+  dateOfBirth?: string;
+  bloodGroup?: string;
+  emergencyContact?: string;
+  profilePhoto?: string; // base64 / data URL or custom URL
+  
+  // Academic & Institutional details
+  batch?: string;
+  semester?: number;
+  email?: string;
+  validTill?: string;
+  role?: "Student" | "Faculty" | "Admin";
+  
+  // Future Authentication & Verification Metadata
+  verificationStatus?: "local" | "verified";
+  lastSyncedAt?: string;
+}
+
 export interface UserProfile {
   name: string;
   role: "Student" | "Faculty" | "Admin";
   enrollmentId?: string;
   department: string;
   semester?: number;
+  dob?: string;
+  bloodGroup?: string;
+  validTill?: string;
+  emergencyContact?: string;
+  avatarUrl?: string;
 }
 
 export interface AdminBroadcastNotice {

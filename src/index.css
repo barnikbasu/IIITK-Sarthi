@@ -73,4 +73,28 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  @media print {
+    body * {
+      visibility: hidden;
+    }
+    #digital-student-id-modal-overlay,
+    #digital-student-id-modal-overlay * {
+      visibility: visible;
+    }
+    #digital-student-id-modal-overlay {
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: white !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    #iiitk-id-card-front,
+    #iiitk-id-card-back {
+      box-shadow: none !important;
+      border: 1px solid #000 !important;
+      break-inside: avoid;
+    }
+  }
 }

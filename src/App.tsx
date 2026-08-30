@@ -15,31 +15,34 @@ import SettingsView from "./components/views/SettingsView";
 import InstituteAtlasView from "./components/institute/InstituteAtlasView";
 import EventsView from "./components/views/EventsView";
 import { useState } from "react";
+import { StudentProfileProvider } from "./context/StudentProfileContext";
 
 export default function App() {
   const [activeTab, setActiveTab] = useState("dashboard");
 
   return (
-    <MainLayout activeTab={activeTab} setActiveTab={setActiveTab}>
-      <div className="space-y-4">
-        {activeTab === "dashboard" && <UnifiedDashboard setActiveTab={setActiveTab} />}
-        {activeTab === "institute" && <InstituteAtlasView onNavigateTab={setActiveTab} />}
-        {activeTab === "events" && <EventsView />}
-        {activeTab === "tasks" && <TasksView />}
-        {activeTab === "opportunities" && <OpportunitiesView />}
-        {activeTab === "resources" && <ResourcesView />}
-        {activeTab === "market" && <MarketView />}
-        {activeTab === "directory" && <DirectoryView />}
-        {activeTab === "schedule" && <ScheduleView />}
-        {activeTab === "emergency" && <EmergencyView />}
-        {activeTab === "clubs" && <ClubsView />}
-        {activeTab === "analytics" && <AnalyticsView />}
-        {activeTab === "map" && <MapView />}
-        {activeTab === "settings" && <SettingsView />}
-        
-        {/* Fallback for AI if accessed directly (though it's now in FAB) */}
-        {activeTab === "ai" && <SarthiAI />}
-      </div>
-    </MainLayout>
+    <StudentProfileProvider>
+      <MainLayout activeTab={activeTab} setActiveTab={setActiveTab}>
+        <div className="space-y-4">
+          {activeTab === "dashboard" && <UnifiedDashboard setActiveTab={setActiveTab} />}
+          {activeTab === "institute" && <InstituteAtlasView onNavigateTab={setActiveTab} />}
+          {activeTab === "events" && <EventsView />}
+          {activeTab === "tasks" && <TasksView />}
+          {activeTab === "opportunities" && <OpportunitiesView />}
+          {activeTab === "resources" && <ResourcesView />}
+          {activeTab === "market" && <MarketView />}
+          {activeTab === "directory" && <DirectoryView />}
+          {activeTab === "schedule" && <ScheduleView />}
+          {activeTab === "emergency" && <EmergencyView />}
+          {activeTab === "clubs" && <ClubsView />}
+          {activeTab === "analytics" && <AnalyticsView />}
+          {activeTab === "map" && <MapView />}
+          {activeTab === "settings" && <SettingsView />}
+          
+          {/* Fallback for AI if accessed directly (though it's now in FAB) */}
+          {activeTab === "ai" && <SarthiAI />}
+        </div>
+      </MainLayout>
+    </StudentProfileProvider>
   );
 }

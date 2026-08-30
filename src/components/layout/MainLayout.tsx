@@ -32,6 +32,7 @@ import SarthiAI from "../ai/SarthiAI";
 import ProfileDropdown from "./ProfileDropdown";
 import NotificationDropdown from "../notifications/NotificationDropdown";
 import { IIITKCrest, IIITKBanner } from "../common/IIITKLogo";
+import { useStudentProfile } from "../../context/StudentProfileContext";
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -56,6 +57,7 @@ const navItems = [
 ];
 
 export default function MainLayout({ children, activeTab, setActiveTab }: MainLayoutProps) {
+  const { profile } = useStudentProfile();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
     const darkmode = localStorage.getItem("darkmode");
@@ -168,18 +170,33 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
             <span>Settings</span>
           </button>
 
-          {/* Barnik Basu Profile Box card */}
+          {/* Student Profile Box Card */}
           <button 
             onClick={() => setActiveTab("settings")}
-            className="w-full flex items-center gap-3 p-3.5 rounded-3xl border border-slate-200/60 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 text-left transition-all group"
+            className="w-full flex items-center gap-3 p-3.5 rounded-3xl border border-slate-200/60 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/30 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 text-left transition-all group cursor-pointer"
             title="Open Account Settings"
           >
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-primary via-indigo-600 to-indigo-800 flex items-center justify-center text-white text-xs font-black ring-2 ring-slate-100 dark:ring-slate-800 shrink-0 group-hover:scale-105 transition-transform">
-               BB
+            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-brand-primary via-indigo-600 to-indigo-800 overflow-hidden flex items-center justify-center text-white text-xs font-black ring-2 ring-slate-100 dark:ring-slate-800 shrink-0 group-hover:scale-105 transition-transform">
+               {profile.profilePhoto ? (
+                 <img src={profile.profilePhoto} alt={profile.fullName} className="w-full h-full object-cover" />
+               ) : (
+                 <span>
+                   {profile.fullName
+                     ?.split(" ")
+                     .filter(Boolean)
+                     .slice(0, 2)
+                     .map((w) => w[0].toUpperCase())
+                     .join("") || "BB"}
+                 </span>
+               )}
             </div>
             <div className="overflow-hidden flex-1">
-               <p className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight truncate group-hover:text-brand-primary dark:group-hover:text-brand-teal transition-colors">Barnik Basu</p>
-               <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5">B.Tech CSE • Sem 4</p>
+               <p className="font-bold text-sm text-slate-800 dark:text-slate-200 leading-tight truncate group-hover:text-brand-primary dark:group-hover:text-brand-teal transition-colors">
+                 {profile.fullName || "Barnik Basu"}
+               </p>
+               <p className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mt-0.5 truncate">
+                 {profile.department?.includes("Computer") ? "B.Tech CSE • Sem 4" : `${profile.department?.slice(0, 14)} • Sem 4`}
+               </p>
             </div>
           </button>
         </div>

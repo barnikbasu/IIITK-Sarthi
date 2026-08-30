@@ -3,9 +3,13 @@ import { Notice, Contact, QuickLink, DashboardMetrics, UserProfile, Resource, Ma
 export const currentUser: UserProfile = {
   name: "Barnik Basu",
   role: "Student",
-  enrollmentId: "IIITK/BTech/2022/045",
-  department: "Computer Science & Engineering",
+  enrollmentId: "CSE/25028/1428",
+  department: "Computer Science and Engineering",
   semester: 4,
+  dob: "15 Aug 2006",
+  bloodGroup: "O+",
+  validTill: "31 Jul 2029",
+  emergencyContact: "9143305732",
 };
 
 export const dashboardMetrics: DashboardMetrics = {

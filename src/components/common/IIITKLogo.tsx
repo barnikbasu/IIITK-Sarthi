@@ -5,10 +5,11 @@ interface IIITKCrestProps {
   className?: string;
   size?: number;
   monochrome?: boolean;
+  primaryColor?: string;
 }
 
-export function IIITKCrest({ className, size = 48, monochrome = false }: IIITKCrestProps) {
-  const primaryColor = monochrome ? "currentColor" : "#1A4FD8";
+export function IIITKCrest({ className, size = 48, monochrome = false, primaryColor: customPrimaryColor }: IIITKCrestProps) {
+  const primaryColor = customPrimaryColor || (monochrome ? "currentColor" : "#1A4FD8");
   const darkStroke = monochrome ? "currentColor" : "#0F172A";
 
   return (

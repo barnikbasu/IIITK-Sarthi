@@ -33,20 +33,23 @@ import {
   Wifi,
   LifeBuoy,
   Radio,
-  Volume2
+  Volume2,
+  QrCode
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../../lib/utils";
 import { IIITKCrest, IIITKBanner } from "../common/IIITKLogo";
 import AttendancePredictor from "./AttendancePredictor";
+import DigitalStudentIDModal from "../common/DigitalStudentIDModal";
+import { useStudentProfile } from "../../context/StudentProfileContext";
 
 interface UnifiedDashboardProps {
   setActiveTab: (tab: string) => void;
 }
 
 export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps) {
-  // Student profile state
-  const [studentName] = useState<string>("Barnik");
+  const { profile, firstName } = useStudentProfile();
+  const [showIdCard, setShowIdCard] = useState(false);
   
   // Attendance & Check-in simulation states
   const [hasCheckedIn, setHasCheckedIn] = useState(false);
@@ -82,7 +85,7 @@ export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps
   const [aiMessages, setAiMessages] = useState<{role: "user" | "ai", content: string}[]>([
     {
       role: "ai",
-      content: "Namaste Barnik! I'm Sarthi, your IIIT Kalyani AI co-pilot. Need help finding a classroom, checking your attendance margin, or looking up the mess menu?"
+      content: `Namaste ${firstName}! I'm Sarthi, your IIIT Kalyani AI co-pilot. Need help finding a classroom, checking your attendance margin, or looking up the mess menu?`
     }
   ]);
   const [aiLoading, setAiLoading] = useState(false);
@@ -185,6 +188,15 @@ export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps
         {/* Quick Institutional Action Badges */}
         <div className="flex flex-wrap items-center gap-2.5 shrink-0 z-10">
           <button 
+            type="button"
+            onClick={() => setShowIdCard(true)}
+            className="px-3.5 py-2 rounded-xl bg-teal-50 dark:bg-teal-950/30 text-teal-700 dark:text-teal-400 border border-teal-200/60 dark:border-teal-800/60 text-xs font-bold flex items-center gap-1.5 hover:bg-teal-100 dark:hover:bg-teal-900/40 transition-colors shadow-sm cursor-pointer"
+          >
+            <QrCode size={14} />
+            <span>Digital ID Pass</span>
+          </button>
+
+          <button 
             onClick={() => setActiveTab("emergency")}
             className="px-3.5 py-2 rounded-xl bg-rose-50 dark:bg-rose-950/30 text-rose-600 dark:text-rose-400 border border-rose-200/60 dark:border-rose-800/60 text-xs font-bold flex items-center gap-1.5 hover:bg-rose-100 dark:hover:bg-rose-900/40 transition-colors shadow-sm"
           >
@@ -247,12 +259,12 @@ export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps
             </div>
 
             <h1 className="font-heading text-4xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
-              Good Morning, {studentName}.
+              Good Morning, {firstName}.
             </h1>
 
             <div className="flex flex-wrap items-center gap-3 text-slate-300 text-xs sm:text-sm font-medium pt-1">
               <span className="px-3 py-1 bg-white/10 backdrop-blur-md rounded-lg font-bold border border-white/10">
-                B.Tech CSE • Semester IV
+                {profile.department?.includes("Computer") ? "B.Tech CSE • Semester IV" : `${profile.department} • Semester IV`}
               </span>
               <span className="text-slate-400">•</span>
               <div className="flex items-center gap-1.5 text-amber-400 font-bold">
@@ -1119,6 +1131,12 @@ export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps
           </div>
         )}
       </AnimatePresence>
+
+      {/* Viewport-Centered Digital Student ID Card Modal */}
+      <DigitalStudentIDModal
+        isOpen={showIdCard}
+        onClose={() => setShowIdCard(false)}
+      />
 
     </div>
   );
