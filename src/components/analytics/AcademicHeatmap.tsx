@@ -397,10 +397,10 @@ export default function AcademicHeatmap() {
                 <Tooltip 
                   contentStyle={{ 
                     borderRadius: '16px', 
-                    border: '1px solid #334155', 
-                    backgroundColor: '#0F172A', 
+                    border: '1px solid #262626', 
+                    backgroundColor: '#0D0D0D', 
                     color: '#fff',
-                    boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.3)' 
+                    boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.5)' 
                   }} 
                 />
                 <Legend verticalAlign="top" height={36} />

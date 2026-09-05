@@ -313,16 +313,16 @@ export default function EmergencyView() {
       {/* SHARE LOCATION TELEMETRY LOADING STATE */}
       <AnimatePresence>
         {isShareOpen && (
-          <div className="fixed inset-0 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
             <motion.div 
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0 }}
-              className="bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 rounded-[2.5rem] w-full max-w-sm p-8 shadow-2xl text-center"
+              className="bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-[#262626] rounded-[2.5rem] w-full max-w-sm p-8 shadow-2xl text-center"
             >
               <div className="w-16 h-16 border-4 border-brand-primary border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
               <h4 className="text-lg font-black text-slate-900 dark:text-white uppercase tracking-tight">Accessing Campus GPS</h4>
-              <p className="text-xs text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest mt-1">Encrypting spatial telemetry...</p>
+              <p className="text-xs text-slate-400 dark:text-[#737373] font-bold uppercase tracking-widest mt-1">Encrypting spatial telemetry...</p>
             </motion.div>
           </div>
         )}
@@ -331,12 +331,12 @@ export default function EmergencyView() {
       {/* RAPID HELP NODE WALK PATH DETAILS */}
       <AnimatePresence>
         {isNodeOpen && selectedNode && (
-          <div className="fixed inset-0 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 rounded-[2.5rem] w-full max-w-lg p-8 shadow-2xl relative overflow-hidden"
+              className="bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-[#262626] rounded-[2.5rem] w-full max-w-lg p-8 shadow-2xl relative overflow-hidden"
             >
               <button 
                 onClick={() => {
@@ -390,11 +390,11 @@ export default function EmergencyView() {
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 rounded-[2.5rem] w-full max-w-2xl p-8 shadow-2xl relative overflow-hidden"
+              className="bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-[#262626] rounded-[2.5rem] w-full max-w-2xl p-8 shadow-2xl relative overflow-hidden"
             >
               <button 
                 onClick={() => setIsCareOpen(false)}
-                className="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+                className="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-full hover:bg-slate-50 dark:hover:bg-[#1A1A1A] transition-all"
               >
                 <X size={18} />
               </button>
@@ -404,17 +404,17 @@ export default function EmergencyView() {
                    <Heart size={24} className="text-brand-teal animate-pulse" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">ANONYMOUS ADVOCACY NET</span>
+                  <span className="text-[10px] font-black text-slate-400 dark:text-[#737373] uppercase tracking-widest">ANONYMOUS ADVOCACY NET</span>
                   <h3 className="text-2xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">Sarthi Care Advocacy Support</h3>
                 </div>
               </div>
 
-              <div className="bg-slate-50 dark:bg-slate-900 rounded-3xl border border-slate-200 dark:border-slate-800 p-4 h-[240px] overflow-y-auto space-y-3 mb-4 flex flex-col scrollbar-hide text-xs">
+              <div className="bg-slate-50 dark:bg-[#000000] rounded-3xl border border-slate-200 dark:border-[#262626] p-4 h-[240px] overflow-y-auto space-y-3 mb-4 flex flex-col scrollbar-hide text-xs">
                  {chatHistory.map((item, idx) => (
                    <div key={idx} className={cn("flex flex-col max-w-[85%] p-3 rounded-2xl shadow-sm", 
                      item.sender.includes("Barnik") 
                        ? "self-end bg-brand-teal text-white rounded-tr-none" 
-                       : "self-start bg-white dark:bg-brand-navy text-slate-700 dark:text-slate-200 border border-slate-100 dark:border-slate-850 rounded-tl-none font-semibold"
+                       : "self-start bg-white dark:bg-[#141414] text-slate-700 dark:text-[#FFFFFF] border border-slate-100 dark:border-[#262626] rounded-tl-none font-semibold"
                    )}>
                       <span className="text-[8px] font-black uppercase opacity-60 block mb-1">{item.sender}</span>
                       <p className="leading-relaxed">{item.text}</p>

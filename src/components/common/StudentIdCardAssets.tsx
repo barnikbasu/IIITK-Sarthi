@@ -38,10 +38,10 @@ export function DefaultStudentPhotoPlaceholder({
         height="300"
         className={
           theme === "light"
-            ? "fill-[#e2e8f0]"
+            ? "fill-[#E5E5E5]"
             : theme === "dark"
-            ? "fill-[#1e293b]"
-            : "fill-[#e2e8f0] dark:fill-[#1e293b]"
+            ? "fill-[#141414]"
+            : "fill-[#E5E5E5] dark:fill-[#141414]"
         }
       />
 
@@ -52,10 +52,10 @@ export function DefaultStudentPhotoPlaceholder({
         r="44"
         className={
           theme === "light"
-            ? "fill-[#64748b]"
+            ? "fill-[#737373]"
             : theme === "dark"
-            ? "fill-[#94a3b8]"
-            : "fill-[#64748b] dark:fill-[#94a3b8]"
+            ? "fill-[#737373]"
+            : "fill-[#737373] dark:fill-[#737373]"
         }
       />
 
@@ -64,10 +64,10 @@ export function DefaultStudentPhotoPlaceholder({
         d="M 28 300 C 28 222 66 178 120 178 C 174 178 212 222 212 300 Z"
         className={
           theme === "light"
-            ? "fill-[#64748b]"
+            ? "fill-[#737373]"
             : theme === "dark"
-            ? "fill-[#94a3b8]"
-            : "fill-[#64748b] dark:fill-[#94a3b8]"
+            ? "fill-[#737373]"
+            : "fill-[#737373] dark:fill-[#737373]"
         }
       />
     </svg>

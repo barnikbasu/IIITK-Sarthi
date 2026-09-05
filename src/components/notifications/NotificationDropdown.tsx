@@ -115,10 +115,10 @@ export default function NotificationDropdown({ setActiveTab }: NotificationDropd
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 10, scale: 0.96 }}
               transition={{ duration: 0.2 }}
-              className="absolute right-0 mt-3 w-[360px] sm:w-[420px] bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 rounded-[2rem] shadow-2xl z-50 overflow-hidden text-left"
+              className="absolute right-0 mt-3 w-[360px] sm:w-[420px] bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-[#262626] rounded-[2rem] shadow-2xl z-50 overflow-hidden text-left"
             >
               {/* Header */}
-              <div className="p-5 pb-3 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <div className="p-5 pb-3 border-b border-slate-100 dark:border-[#1A1A1A] flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-2">
                     <h4 className="font-heading font-bold text-base text-slate-900 dark:text-white">
@@ -264,16 +264,16 @@ export default function NotificationDropdown({ setActiveTab }: NotificationDropd
       {/* Full Notice Reading Modal */}
       <AnimatePresence>
         {selectedNotice && (
-          <div className="fixed inset-0 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50">
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 rounded-[2.5rem] w-full max-w-lg p-8 shadow-2xl relative overflow-hidden"
+              className="bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-[#262626] rounded-[2.5rem] w-full max-w-lg p-8 shadow-2xl relative overflow-hidden"
             >
               <button
                 onClick={() => setSelectedNotice(null)}
-                className="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 rounded-full hover:bg-slate-50 dark:hover:bg-slate-800 transition-all"
+                className="absolute top-6 right-6 p-2 text-slate-400 hover:text-slate-600 dark:hover:text-white rounded-full hover:bg-slate-50 dark:hover:bg-[#1A1A1A] transition-all"
               >
                 <X size={18} />
               </button>

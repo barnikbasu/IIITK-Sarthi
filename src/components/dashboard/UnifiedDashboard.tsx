@@ -230,15 +230,15 @@ export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps
       </div>
 
       {/* 👑 Prestigious Hero Greeting & KPI Command Banner (Image 1, 5, 6 Style) */}
-      <div className="bg-gradient-to-br from-[#0F172A] via-[#1E293B] to-[#0F172A] text-white rounded-[2.5rem] p-7 sm:p-10 shadow-2xl relative overflow-hidden border border-white/10">
+      <div className="bg-gradient-to-br from-[#0A0A0A] via-[#141414] to-[#0A0A0A] text-white rounded-[2.5rem] p-7 sm:p-10 shadow-2xl relative overflow-hidden border border-[#262626]">
         {/* Subtle Crest Watermark inside Hero */}
         <div className="absolute right-6 -bottom-10 opacity-10 pointer-events-none">
           <IIITKCrest size={280} monochrome={true} />
         </div>
         
-        {/* Ambient Glows */}
-        <div className="absolute -top-24 -left-24 w-72 h-72 bg-brand-primary/25 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-24 right-1/3 w-72 h-72 bg-brand-teal/20 rounded-full blur-3xl pointer-events-none" />
+        {/* Ambient Subtle Shimmer */}
+        <div className="absolute -top-24 -left-24 w-72 h-72 bg-white/5 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 right-1/3 w-72 h-72 bg-white/5 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-8">
           
@@ -331,7 +331,7 @@ export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps
               </div>
               <button 
                 onClick={handleMarkAttendance}
-                className="mt-3 w-full py-1.5 bg-white text-brand-navy rounded-xl text-[10px] font-black uppercase tracking-wider hover:bg-slate-100 active:scale-95 transition-all text-center shadow"
+                className="mt-3 w-full py-1.5 bg-white text-black rounded-xl text-[10px] font-bold uppercase tracking-wider hover:bg-neutral-200 active:scale-95 transition-all text-center shadow"
               >
                 {hasCheckedIn ? "Present ✓" : "Mark Present"}
               </button>

@@ -161,21 +161,20 @@ export default function OpportunitiesView() {
 
         {/* Sidebar Insights */}
         <div className="lg:col-span-4 space-y-6">
-            <div className="bg-brand-navy rounded-[2.5rem] p-8 text-white shadow-2xl shadow-brand-primary/10 overflow-hidden relative border border-white/5">
-                <div className="absolute top-0 right-0 w-48 h-48 bg-brand-primary/20 rounded-full -translate-y-12 translate-x-12 blur-[80px]"></div>
-                <Star size={32} className="text-brand-teal mb-4 drop-shadow-glow" />
-                <h3 className="text-xl font-black mb-2 tracking-tight">Sarthi AI Coach</h3>
-                <p className="text-slate-400 text-sm mb-6 leading-relaxed font-bold italic opacity-80">Based on your Interest in Python and recent DSA notes, I recommend applying for the Google Internship first.</p>
+            <div className="bg-neutral-900 dark:bg-[#0D0D0D] rounded-[2.5rem] p-8 text-white shadow-2xl overflow-hidden relative border border-neutral-800 dark:border-[#262626]">
+                <Star size={32} className="text-white mb-4" />
+                <h3 className="font-heading text-xl font-bold mb-2 tracking-tight">Sarthi AI Coach</h3>
+                <p className="text-neutral-400 text-sm mb-6 leading-relaxed font-medium">Based on your interest in Python and recent DSA notes, I recommend applying for the Google Internship first.</p>
                 <button 
                   onClick={() => setIsRoadmapOpen(true)}
-                  className="w-full py-4 bg-white text-brand-navy font-black text-xs uppercase tracking-widest rounded-2xl hover:bg-slate-100 transition-all flex items-center justify-center gap-2"
+                  className="w-full py-4 bg-white text-black font-bold text-xs uppercase tracking-widest rounded-2xl hover:bg-neutral-100 transition-all flex items-center justify-center gap-2"
                 >
                    Open Career Roadmap <ArrowRight size={16} />
                 </button>
             </div>
 
-            <div className="bg-white dark:bg-brand-navy rounded-[2.5rem] p-8 border border-slate-200 dark:border-slate-800 shadow-sm">
-                <h3 className="font-black text-slate-800 dark:text-slate-200 mb-6 uppercase tracking-widest text-xs">Curated for You</h3>
+            <div className="bg-white dark:bg-[#0D0D0D] rounded-[2.5rem] p-8 border border-slate-200 dark:border-[#262626] shadow-sm">
+                <h3 className="font-bold text-slate-800 dark:text-[#FFFFFF] mb-6 uppercase tracking-widest text-xs">Curated for You</h3>
                 <div className="space-y-6">
                     {[
                       { name: "ACM ICPC Regional Selection", info: "In 3 Days", desc: "Competitive Coding Selection" },
