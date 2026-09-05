@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { 
   LayoutDashboard, 
   Calendar, 
@@ -112,6 +112,38 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
     (window as any).toggleDarkMode = toggleDarkMode;
   }, [isDarkMode]);
 
+  // Actual DOM scroll container reference for the main content region
+  const mainContentScrollRef = useRef<HTMLDivElement>(null);
+
+  // Global Route / Tab Change Scroll Restoration Handler:
+  // Guarantees every newly opened page/tab starts fresh at the top (scrollTop: 0)
+  useEffect(() => {
+    const container = mainContentScrollRef.current;
+    const resetScrollToTop = () => {
+      if (container) {
+        container.scrollTop = 0;
+        if (typeof container.scrollTo === "function") {
+          container.scrollTo({ top: 0, left: 0, behavior: "instant" as ScrollBehavior });
+        }
+      }
+      window.scrollTo({ top: 0, left: 0 });
+    };
+
+    // 1. Reset scroll position immediately upon route/tab switch
+    resetScrollToTop();
+
+    // 2. Secondary reset on next animation frame after new route DOM mounts
+    const rAf = requestAnimationFrame(resetScrollToTop);
+
+    // 3. Final reset after AnimatePresence mode="wait" transition completes (250ms duration)
+    const timer = setTimeout(resetScrollToTop, 270);
+
+    return () => {
+      cancelAnimationFrame(rAf);
+      clearTimeout(timer);
+    };
+  }, [activeTab]);
+
   return (
     <div className="flex h-screen bg-slate-50 dark:bg-[#000000] overflow-hidden font-sans text-slate-900 dark:text-[#FFFFFF] transition-colors duration-200">
       {/* Desktop Sidebar with Official Crest */}
@@ -136,7 +168,15 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
           {navItems.map((item) => (
             <button
               key={item.id}
-              onClick={() => setActiveTab(item.id)}
+              onClick={() => {
+                if (activeTab === item.id) {
+                  if (mainContentScrollRef.current) {
+                    mainContentScrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+                  }
+                } else {
+                  setActiveTab(item.id);
+                }
+              }}
               className={cn(
                 "w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 group text-sm font-bold",
                 activeTab === item.id 
@@ -156,7 +196,15 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
         <div className="p-6 border-t border-slate-100 dark:border-[#1A1A1A] space-y-4">
           {/* Settings Tab Option */}
           <button
-            onClick={() => setActiveTab("settings")}
+            onClick={() => {
+              if (activeTab === "settings") {
+                if (mainContentScrollRef.current) {
+                  mainContentScrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+                }
+              } else {
+                setActiveTab("settings");
+              }
+            }}
             className={cn(
               "w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all duration-200 group text-sm font-bold",
               activeTab === "settings" 
@@ -292,8 +340,12 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
           </div>
         </header>
 
-        {/* Dynamic Content Scrollable */}
-        <div className="flex-1 overflow-y-auto bg-transparent p-6 lg:p-10 pb-32 lg:pb-12 scrollbar-hide">
+        {/* Dynamic Content Scrollable (Primary Content Scroll Container) */}
+        <div 
+          ref={mainContentScrollRef}
+          id="main-content-scroll-container"
+          className="flex-1 overflow-y-auto bg-transparent p-6 lg:p-10 pb-32 lg:pb-12 scrollbar-hide"
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
@@ -301,6 +353,16 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -15 }}
               transition={{ duration: 0.25, ease: "easeOut" }}
+              onAnimationStart={() => {
+                if (mainContentScrollRef.current) {
+                  mainContentScrollRef.current.scrollTop = 0;
+                }
+              }}
+              onAnimationComplete={() => {
+                if (mainContentScrollRef.current) {
+                  mainContentScrollRef.current.scrollTop = 0;
+                }
+              }}
               className="max-w-7xl mx-auto"
             >
               {children}
@@ -369,7 +431,15 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id)}
+                onClick={() => {
+                  if (isActive) {
+                    if (mainContentScrollRef.current) {
+                      mainContentScrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+                    }
+                  } else {
+                    setActiveTab(item.id);
+                  }
+                }}
                 className={cn(
                   "flex flex-col items-center justify-center flex-1 h-full py-1 transition-all relative",
                   isActive ? "text-brand-primary dark:text-white" : "text-slate-400 dark:text-[#737373]"
@@ -458,7 +528,13 @@ export default function MainLayout({ children, activeTab, setActiveTab }: MainLa
                   <button
                     key={item.id}
                     onClick={() => {
-                        setActiveTab(item.id);
+                        if (activeTab === item.id) {
+                          if (mainContentScrollRef.current) {
+                            mainContentScrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+                          }
+                        } else {
+                          setActiveTab(item.id);
+                        }
                         setIsSidebarOpen(false);
                     }}
                     className={cn(
