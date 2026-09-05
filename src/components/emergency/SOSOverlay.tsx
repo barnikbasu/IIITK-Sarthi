@@ -13,7 +13,8 @@ import {
   Check, 
   Flashlight,
   ExternalLink,
-  Lock
+  Lock,
+  Building2
 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../../lib/utils";
@@ -105,33 +106,33 @@ export default function SOSOverlay({ isOpen, onClose }: SOSOverlayProps) {
 
   const emergencyActions = [
     {
-      id: "security",
-      title: "Campus Security Command",
-      sub: "Main Gate, QRF & Night Patrols",
-      number: "+91 98765 00001",
-      tel: "+919876500001",
-      icon: ShieldAlert,
-      bg: "from-red-600 to-rose-700",
-      border: "border-red-400",
-      delay: 0.1
-    },
-    {
       id: "medical",
-      title: "Medical Assistance & Ambulance",
-      sub: "24/7 Campus Health Center & Trauma Care",
-      number: "+91 98765 43210",
-      tel: "+919876543210",
+      title: "Medical Emergency",
+      sub: "24/7 Campus Health Emergency & Medical Assistance",
+      number: "033-2582-8562",
+      tel: "033-2582-8562",
       icon: Heart,
       bg: "from-rose-600 to-red-800",
       border: "border-rose-400",
+      delay: 0.1
+    },
+    {
+      id: "office",
+      title: "General Office & Contact Support",
+      sub: "Administrative Office & Student Assistance Desk",
+      number: "033-2582-5003",
+      tel: "033-2582-5003",
+      icon: Building2,
+      bg: "from-sky-600 to-blue-800",
+      border: "border-sky-400",
       delay: 0.2
     },
     {
       id: "antiragging",
-      title: "Anti-Ragging & Proctorial Cell",
-      sub: "National Helpline & IIITK Disciplinary Board",
+      title: "National Anti-Ragging Helpline (24x7 Toll-Free)",
+      sub: "National Anti-Ragging Cell & Disciplinary Directorate",
       number: "1800-180-5522",
-      tel: "18001805522",
+      tel: "1800-180-5522",
       icon: Siren,
       bg: "from-amber-600 to-red-700",
       border: "border-amber-400",

@@ -21,7 +21,7 @@ export interface EmergencyContact {
   id: string;
   title: string;
   number: string;
-  category: "Medical" | "Security" | "Admin";
+  category: "Medical" | "Security" | "Admin" | "Office" | "General";
 }
 
 export interface Resource {

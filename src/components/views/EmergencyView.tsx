@@ -1,4 +1,4 @@
-import { Phone, ShieldAlert, Heart, Siren, MapPin, Share2, X, AlertTriangle, Send, CheckCircle2, Radio, Power } from "lucide-react";
+import { Phone, ShieldAlert, Heart, Siren, MapPin, Share2, X, AlertTriangle, Send, CheckCircle2, Radio, Power, Building2 } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { emergencyContacts } from "../../data/mockData";
 import { cn } from "../../lib/utils";
@@ -183,8 +183,18 @@ export default function EmergencyView() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {emergencyContacts.map((contact, idx) => {
-              const Icon = contact.category === "Medical" ? Heart : contact.category === "Security" ? ShieldAlert : Siren;
-              const colorClass = contact.category === "Medical" ? "text-status-success bg-status-success/10" : contact.category === "Security" ? "text-status-danger bg-status-danger/10" : "text-brand-primary bg-brand-primary/10";
+              const Icon = contact.category === "Medical" 
+                ? Heart 
+                : contact.category === "Office" 
+                  ? Building2 
+                  : contact.category === "Security" 
+                    ? ShieldAlert 
+                    : Siren;
+              const colorClass = contact.category === "Medical" 
+                ? "text-status-success bg-status-success/10" 
+                : contact.category === "Office" 
+                  ? "text-sky-600 dark:text-sky-400 bg-sky-500/10" 
+                  : "text-status-danger bg-status-danger/10";
               
               return (
                   <motion.div
@@ -192,18 +202,22 @@ export default function EmergencyView() {
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: idx * 0.05 }}
-                    className="bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 p-6 rounded-[2.5rem] shadow-sm flex items-center justify-between group overflow-hidden relative"
+                    className="bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-[#262626] p-6 rounded-[2.5rem] shadow-sm flex items-center justify-between group overflow-hidden relative"
                   >
-                       <div className="flex items-center gap-5">
-                            <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110", colorClass)}>
+                       <div className="flex items-center gap-5 min-w-0">
+                            <div className={cn("w-14 h-14 rounded-2xl flex items-center justify-center transition-transform group-hover:scale-110 shrink-0", colorClass)}>
                                 <Icon size={28} />
                             </div>
-                            <div>
-                                <h4 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tighter opacity-60 text-[10px]">{contact.title}</h4>
-                                <p className="text-xl font-black text-slate-800 dark:text-slate-200 mt-0.5 tracking-tighter">{contact.number}</p>
+                            <div className="min-w-0">
+                                <h4 className="font-black text-slate-900 dark:text-slate-100 uppercase tracking-tight opacity-70 text-[11px] leading-tight line-clamp-2">{contact.title}</h4>
+                                <p className="text-lg sm:text-xl font-black text-slate-800 dark:text-slate-100 mt-1 tracking-tight whitespace-nowrap font-mono">{contact.number}</p>
                             </div>
                        </div>
-                       <a href={`tel:${contact.number}`} className="w-12 h-12 rounded-full bg-slate-900 dark:bg-brand-primary text-white flex items-center justify-center hover:bg-slate-800 transition-colors shadow-lg z-10">
+                       <a 
+                         href={`tel:${contact.number}`} 
+                         aria-label={`Call ${contact.title} at ${contact.number}`}
+                         className="w-12 h-12 rounded-full bg-slate-900 dark:bg-[#1A1A1A] text-white dark:text-white border border-transparent dark:border-[#333333] flex items-center justify-center hover:bg-slate-800 dark:hover:bg-[#262626] transition-colors shadow-lg z-10 shrink-0 ml-3"
+                       >
                            <Phone size={20} />
                        </a>
                   </motion.div>
@@ -212,7 +226,7 @@ export default function EmergencyView() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="bg-white dark:bg-brand-navy border border-slate-200 dark:border-slate-800 p-8 rounded-[2.5rem] shadow-sm">
+          <div className="bg-white dark:bg-[#0D0D0D] border border-slate-200 dark:border-[#262626] p-8 rounded-[2.5rem] shadow-sm">
                 <h3 className="text-xl font-black text-slate-900 dark:text-slate-100 flex items-center gap-2 mb-6 tracking-tight uppercase leading-none">
                     <MapPin size={24} className="text-status-danger" />
                     Rapid Help Nodes
@@ -240,7 +254,7 @@ export default function EmergencyView() {
           
           <div className="bg-brand-teal/5 dark:bg-brand-teal/10 border border-brand-teal/20 p-8 rounded-[2.5rem] relative overflow-hidden group flex flex-col justify-between min-h-[280px]">
                 <div className="relative z-10">
-                    <h3 className="text-xl font-black text-brand-navy dark:text-brand-teal mb-2 tracking-tight uppercase leading-none">Sarthi Care Network</h3>
+                    <h3 className="text-xl font-black text-slate-900 dark:text-brand-teal mb-2 tracking-tight uppercase leading-none">Sarthi Care Network</h3>
                     <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-6 font-semibold italic">Connect anonymously with peer support or professional counselors. You are not alone on this journey.</p>
                 </div>
                 <div className="relative z-10">
@@ -263,7 +277,7 @@ export default function EmergencyView() {
               initial={{ opacity: 0, scale: 0.9, rotateY: 45 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="bg-white dark:bg-brand-navy border-4 border-rose-600 rounded-[2.5rem] w-full max-w-lg p-10 shadow-2xl relative text-center overflow-hidden"
+              className="bg-white dark:bg-[#0D0D0D] border-4 border-rose-600 rounded-[2.5rem] w-full max-w-lg p-10 shadow-2xl relative text-center overflow-hidden"
             >
               <div className="absolute top-0 left-0 w-full h-2.5 bg-rose-100">
                 <motion.div 

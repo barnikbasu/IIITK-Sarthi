@@ -127,9 +127,9 @@ export const tasks: Task[] = [
 ];
 
 export const emergencyContacts: EmergencyContact[] = [
-  { id: "e1", title: "Campus Ambulance & Trauma", number: "+91 98765 43210", category: "Medical" },
-  { id: "e2", title: "Main Security Gate & Control Room", number: "+91 98765 00001", category: "Security" },
-  { id: "e3", title: "Anti-Ragging & Proctorial Cell", number: "1800-180-5522", category: "Admin" },
+  { id: "e1", title: "Medical Emergency", number: "033-2582-8562", category: "Medical" },
+  { id: "e2", title: "General Office & Contact Support", number: "033-2582-5003", category: "Office" },
+  { id: "e3", title: "National Anti-Ragging Helpline (24x7 Toll-Free)", number: "1800-180-5522", category: "Admin" },
 ];
 
 export const adminBroadcasts: AdminBroadcastNotice[] = [
