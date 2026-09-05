@@ -6,9 +6,10 @@ interface IIITKCrestProps {
   size?: number;
   monochrome?: boolean;
   primaryColor?: string;
+  transparentBg?: boolean;
 }
 
-export function IIITKCrest({ className, size = 48, monochrome = false, primaryColor: customPrimaryColor }: IIITKCrestProps) {
+export function IIITKCrest({ className, size = 48, monochrome = false, primaryColor: customPrimaryColor, transparentBg = false }: IIITKCrestProps) {
   const primaryColor = customPrimaryColor || (monochrome ? "currentColor" : "#1A4FD8");
   const darkStroke = monochrome ? "currentColor" : "#000000";
 
@@ -25,8 +26,8 @@ export function IIITKCrest({ className, size = 48, monochrome = false, primaryCo
       {/* Outer Shield Double Border */}
       <path
         d="M20 25 L100 10 L180 25 L180 145 C180 185 140 220 100 232 C60 220 20 185 20 145 Z"
-        fill="white"
-        className="dark:fill-[#000000]"
+        fill={transparentBg ? "none" : "white"}
+        className={transparentBg ? "" : "dark:fill-[#000000]"}
         stroke={primaryColor}
         strokeWidth="6"
         strokeLinejoin="round"
@@ -98,14 +99,14 @@ export function IIITKCrest({ className, size = 48, monochrome = false, primaryCo
       {/* Ribbon Banner: INDIAN INSTITUTE OF INFORMATION TECHNOLOGY */}
       <g>
         {/* Ribbon Fold Ends */}
-        <path d="M18 162 L28 152 L28 174 L18 184 Z" fill={primaryColor} fillOpacity="0.8" />
-        <path d="M182 162 L172 152 L172 174 L182 184 Z" fill={primaryColor} fillOpacity="0.8" />
+        <path d="M18 162 L28 152 L28 174 L18 184 Z" fill={primaryColor} fillOpacity={transparentBg ? "0.3" : "0.8"} />
+        <path d="M182 162 L172 152 L172 174 L182 184 Z" fill={primaryColor} fillOpacity={transparentBg ? "0.3" : "0.8"} />
 
         {/* Main Ribbon Arch */}
         <path
           d="M24 160 Q100 178 176 160 L176 182 Q100 200 24 182 Z"
-          fill="white"
-          className="dark:fill-slate-900"
+          fill={transparentBg ? "none" : "white"}
+          className={transparentBg ? "" : "dark:fill-slate-900"}
           stroke={primaryColor}
           strokeWidth="2.5"
           strokeLinejoin="round"
@@ -137,8 +138,8 @@ export function IIITKCrest({ className, size = 48, monochrome = false, primaryCo
           width="64"
           height="18"
           rx="3"
-          fill="white"
-          className="dark:fill-slate-900"
+          fill={transparentBg ? "none" : "white"}
+          className={transparentBg ? "" : "dark:fill-slate-900"}
           stroke={primaryColor}
           strokeWidth="2.5"
         />

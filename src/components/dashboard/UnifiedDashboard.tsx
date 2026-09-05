@@ -230,10 +230,24 @@ export default function UnifiedDashboard({ setActiveTab }: UnifiedDashboardProps
       </div>
 
       {/* 👑 Prestigious Hero Greeting & KPI Command Banner (Image 1, 5, 6 Style) */}
-      <div className="bg-gradient-to-br from-[#0A0A0A] via-[#141414] to-[#0A0A0A] text-white rounded-[2.5rem] p-7 sm:p-10 shadow-2xl relative overflow-hidden border border-[#262626]">
-        {/* Subtle Crest Watermark inside Hero */}
-        <div className="absolute right-6 -bottom-10 opacity-10 pointer-events-none">
-          <IIITKCrest size={280} monochrome={true} />
+      <div 
+        id="hero-greeting-command-banner"
+        className="bg-gradient-to-br from-[#0A0A0A] via-[#141414] to-[#0A0A0A] text-white rounded-[2.5rem] p-7 sm:p-10 shadow-2xl relative overflow-hidden border border-[#262626]"
+      >
+        {/* Subtle Crest Watermark inside Hero - Full Visibility Safe Area • Center-Right Aligned */}
+        <div 
+          id="hero-crest-watermark-container"
+          className="absolute right-4 sm:right-8 lg:right-12 xl:right-16 top-1/2 -translate-y-1/2 pointer-events-none flex items-center justify-center select-none z-0"
+        >
+          {/* Subtle Ambient Teal/Cyan Aura behind crest for high-tech institutional look */}
+          <div className="absolute w-44 h-44 sm:w-56 sm:h-56 bg-brand-teal/15 rounded-full blur-3xl pointer-events-none -z-10" />
+          
+          <IIITKCrest 
+            size={195} 
+            monochrome={true} 
+            transparentBg={true}
+            className="w-auto h-[145px] sm:h-[170px] lg:h-[190px] max-h-[82%] text-brand-teal/25 dark:text-brand-teal/30 drop-shadow-[0_0_16px_rgba(13,148,136,0.2)] transition-all duration-300" 
+          />
         </div>
         
         {/* Ambient Subtle Shimmer */}
